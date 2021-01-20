@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (context) {
+        return MainScreen();
+      },
+    );
+  }
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }

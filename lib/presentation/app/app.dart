@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/repository/auth_repository.dart';
-import 'package:flutter_sancle/presentation/main/main_screen.dart';
+import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
+import 'package:flutter_sancle/presentation/splash/bloc/splash_event.dart';
+import 'package:flutter_sancle/presentation/splash/splash_screen.dart';
 
 import 'bloc/auth_bloc.dart';
 
@@ -18,7 +20,14 @@ class MyApp extends StatelessWidget {
           return AuthBloc(authRepository);
         },
         child: MaterialApp(
-          home: MainScreen(),
+          home: BlocProvider<SplashBloc>(
+            create: (context) {
+              final authRepository =
+                  RepositoryProvider.of<AuthRepository>(context);
+              return SplashBloc(authRepository)..add(UserTokenChecked());
+            },
+            child: SplashScreen(),
+          ),
         ),
       ),
     );
