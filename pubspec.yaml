@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
+  touchable_opacity: 1.1.2
 
 dev_dependencies:
   flutter_test:
