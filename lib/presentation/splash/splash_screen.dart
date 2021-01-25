@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         },
         child: Container(
           child: Center(
-            child: Text('스플래쉬 화면 입니다.'),
+            child: Image.asset("assets/images/sancle_logo_full_yellow.png"),
           ),
         ),
       ),
