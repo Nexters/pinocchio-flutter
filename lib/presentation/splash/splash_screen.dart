@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/presentation/login/login_screen.dart';
 import 'package:flutter_sancle/presentation/main/main_screen.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
-
 import 'bloc/splash_state.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,12 +19,12 @@ class _SplashScreenState extends State<SplashScreen> {
           if (state is UserTokenCheckedSuccess) {
             Navigator.pushReplacement(context, MainScreen.route());
           } else if (state is UserTokenCheckedFailure) {
-            // TODO 로그인 화면으로 전환
+            Navigator.pushReplacement(context, LoginScreen.route());
           }
         },
         child: Container(
           child: Center(
-            child: Text('스플래쉬 화면 입니다.'),
+            child: Image.asset("assets/images/sancle_logo_full_yellow.png"),
           ),
         ),
       ),

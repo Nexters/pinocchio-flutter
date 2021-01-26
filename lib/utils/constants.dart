@@ -15,5 +15,10 @@ const textColor = Color(0xFF000000);
 const textDisableColor = Color(0xFFDBDBDB);
 const buttonDisableColor = Color(0xFFF1EFEE);
 
+const kakaoLoginColor = Color(0xFFFEE500);
+
 // SharedPreferences
 const String PREF_USER_TOKEN = "PREF_USER_TOKEN";
+
+// Error String
+const String DEFAULT_ERROR_MSG = "잠시 후 다시 시도해주세요.";
