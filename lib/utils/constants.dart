@@ -19,6 +19,7 @@ const kakaoLoginColor = Color(0xFFFEE500);
 
 // SharedPreferences
 const String PREF_USER_TOKEN = "PREF_USER_TOKEN";
+const String ONBOARDING_FLAG = "ONBOARDING_FLAG";
 
 // Error String
 const String DEFAULT_ERROR_MSG = "잠시 후 다시 시도해주세요.";
