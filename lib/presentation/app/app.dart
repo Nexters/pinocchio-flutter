@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/repository/auth_repository.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
@@ -10,6 +11,11 @@ import 'bloc/auth_bloc.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return RepositoryProvider<AuthRepository>(
       create: (context) {
         return AuthRepository();
