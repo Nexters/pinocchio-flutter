@@ -4,6 +4,7 @@ import 'package:flutter_sancle/presentation/main/main_screen.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
+import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
@@ -26,7 +27,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPageValue = 0;
   final _pageController = PageController();
-  bool _isEnd = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 child: Text(
                   '건너뛰기',
-                  style: TextStyle(color: Color.fromRGBO(15, 16, 18, 1)),
+                  style: TextStyle(color: sancleDarkColor),
                 ),
               ),
             ),
@@ -90,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           width: MediaQuery.of(context).size.width,
           height: 300,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: whiteColor,
           ),
           child: Column(children: <Widget>[
             SizedBox(height: 20),
@@ -128,17 +128,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             TouchableOpacity(
               activeOpacity: 0.6,
               onTap: () {
-                if(_isEnd){
-                  BlocProvider.of<OnboardingBloc>(context)
-                      .add(OnboardingFinish());
+                if (_currentPageValue == 2) {
+
                 }
                 if (_currentPageValue < 2) {
                   print('$_currentPageValue');
                   _getChangedPageAndMoveBar(_currentPageValue + 1);
                   _pageController.jumpToPage(_currentPageValue);
-                }
-                if (_currentPageValue == 2) {
-                  _isEnd = true;
                 }
               },
               child: Container(
@@ -148,7 +144,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     borderRadius: BorderRadius.circular(30.0),
                     border: Border.all(
                       width: 0.5,
-                      color: Color.fromRGBO(15, 16, 18, 0.4),
+                      color: buttonBorderDarkColor,
                     )),
                 alignment: Alignment.center,
                 child: Wrap(children: [
@@ -159,7 +155,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: TextStyle(
                         fontFamily: 'nanum_square',
                         fontWeight: FontWeight.w800,
-                        color: Color.fromRGBO(15, 16, 18, 1),
+                        color: sancleDarkColor,
                         fontSize: 16,
                       ),
                     ),
@@ -188,15 +184,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     FittedBox(
         alignment: Alignment.topCenter,
         child: Image.asset('assets/images/onboarding_1.png'),
-        fit: BoxFit.fill),
+        fit: BoxFit.cover),
     FittedBox(
         alignment: Alignment.topCenter,
         child: Image.asset('assets/images/onboarding_2.png'),
-        fit: BoxFit.fill),
+        fit: BoxFit.cover),
     FittedBox(
         alignment: Alignment.topCenter,
         child: Image.asset('assets/images/onboarding_3.png'),
-        fit: BoxFit.fill),
+        fit: BoxFit.cover),
   ];
 
   Widget _circleBar(bool isActive) {
@@ -206,9 +202,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8,
       width: 8,
       decoration: BoxDecoration(
-          color: isActive ? Color(0xFFF8D247) : Colors.white,
+          color: isActive ? pageIndicatorSelectColor : whiteColor,
           border: Border.all(
-            color: isActive ? Color(0xFFDFB10F) : Color(0xFFC4C4C4),
+            color: isActive ? pageIndicatorSelectBorderColor : pageIndicatorUnselectColor,
           ),
           borderRadius: BorderRadius.all(Radius.circular(12))),
     );
