@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sancle/presentation/home/home_screen.dart';
+import 'package:flutter_sancle/presentation/login/login_screen.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
@@ -31,7 +31,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: BlocListener<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
           if (state is OnboardingEnd) {
-            Navigator.pushReplacement(context, HomeScreen.route());
+            Navigator.pushReplacement(context, LoginScreen.route());
           }
         },
         child: SafeArea(
