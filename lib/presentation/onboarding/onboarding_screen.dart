@@ -12,13 +12,12 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 class OnboardingScreen extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute(
-      builder: (_) => BlocProvider<OnboardingBloc>(
-        create: (context) {
-          return OnboardingBloc()..add(OnboardingInitial());
-        },
-        child: OnboardingScreen(),
-      )
-    );
+        builder: (_) => BlocProvider<OnboardingBloc>(
+              create: (context) {
+                return OnboardingBloc()..add(OnboardingInitial());
+              },
+              child: OnboardingScreen(),
+            ));
   }
 
   @override
@@ -52,10 +51,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: <Widget>[
           Container(
             child: PageView.builder(
-                controller: BlocProvider.of<OnboardingBloc>(context).pageController,
+                controller:
+                    BlocProvider.of<OnboardingBloc>(context).pageController,
                 itemCount: _onbordingList.length,
                 onPageChanged: (page) {
-                  BlocProvider.of<OnboardingBloc>(context).add(OnboardingSlide(page));
+                  BlocProvider.of<OnboardingBloc>(context)
+                      .add(OnboardingSlide(page));
                 },
                 itemBuilder: (context, index) {
                   return _onbordingList[index];
@@ -64,11 +65,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: getProportionateScreenHeight(70), right: getProportionateScreenWidth(30)),
+              padding: EdgeInsets.only(
+                  top: getProportionateScreenHeight(70),
+                  right: getProportionateScreenWidth(30)),
               child: TouchableOpacity(
                 activeOpacity: 0.6,
                 onTap: () {
-                  BlocProvider.of<OnboardingBloc>(context).add(OnboardingSkip());
+                  BlocProvider.of<OnboardingBloc>(context)
+                      .add(OnboardingSkip());
                 },
                 child: Text(
                   '건너뛰기',
@@ -86,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return StreamBuilder<int>(
       stream: BlocProvider.of<OnboardingBloc>(context).currentPageValue,
       initialData: 0,
-      builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
         return Expanded(
           flex: 4,
           child: Align(
@@ -119,7 +123,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(left: getProportionateScreenWidth(24)),
+                      padding: EdgeInsets.only(
+                          left: getProportionateScreenWidth(24)),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -132,11 +137,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 TouchableOpacity(
                   activeOpacity: 0.6,
                   onTap: () {
-                    BlocProvider.of<OnboardingBloc>(context).add(OnboardingNext());
+                    BlocProvider.of<OnboardingBloc>(context)
+                        .add(OnboardingNext());
                   },
                   child: Container(
                     height: getProportionateScreenHeight(52),
-                    width: snapshot.data < 2 ? getProportionateScreenWidth(120) : getProportionateScreenWidth(142),
+                    width: snapshot.data < 2
+                        ? getProportionateScreenWidth(120)
+                        : getProportionateScreenWidth(142),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         border: Border.all(
@@ -203,7 +211,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       decoration: BoxDecoration(
           color: isActive ? pageIndicatorSelectColor : whiteColor,
           border: Border.all(
-            color: isActive ? pageIndicatorSelectBorderColor : pageIndicatorUnselectColor,
+            color: isActive
+                ? pageIndicatorSelectBorderColor
+                : pageIndicatorUnselectColor,
           ),
           borderRadius: BorderRadius.all(Radius.circular(12))),
     );

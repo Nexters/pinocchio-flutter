@@ -11,6 +11,7 @@ class OnboardingNext extends OnboardingEvent {}
 
 class OnboardingSlide extends OnboardingEvent {
   int page;
+
   OnboardingSlide(this.page);
 }
 

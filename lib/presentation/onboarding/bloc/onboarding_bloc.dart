@@ -13,35 +13,35 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   final _pageController = PageController();
 
-  OnboardingBloc() : super(OnboardingStart()){
+  OnboardingBloc() : super(OnboardingStart()) {
     _currentPageValueStream = _currentPageValueController.stream;
   }
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
-    if(event is OnboardingNext){
-
-      if(value == 2){
+    if (event is OnboardingNext) {
+      if (value == 2) {
         yield OnboardingEnd();
       }
-      if(value < 2){
+      if (value < 2) {
         _currentPageValueController.add(++value);
         _pageController.jumpToPage(value);
         yield OnboardingProcessing();
       }
     }
 
-    if(event is OnboardingSlide){
+    if (event is OnboardingSlide) {
       value = event.page;
       _pageController.jumpToPage(value);
       _currentPageValueController.add(value);
     }
 
-    if(event is OnboardingSkip){
+    if (event is OnboardingSkip) {
       yield OnboardingEnd();
     }
   }
 
   Stream<int> get currentPageValue => _currentPageValueStream;
+
   get pageController => _pageController;
 }
