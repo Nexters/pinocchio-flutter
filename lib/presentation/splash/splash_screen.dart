@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/login/login_screen.dart';
-import 'package:flutter_sancle/presentation/main/main_screen.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/onboarding/onboarding_screen.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
 import 'package:flutter_sancle/utils/size_config.dart';

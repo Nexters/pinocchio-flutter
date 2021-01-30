@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
-import 'package:flutter_sancle/presentation/main/main_screen.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is UserLoginSuccess) {
-            Navigator.pushReplacement(context, MainScreen.route());
+            Navigator.pushReplacement(context, HomeScreen.route());
           } else if (state is UserLoginFailure) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text(DEFAULT_ERROR_MSG)));
