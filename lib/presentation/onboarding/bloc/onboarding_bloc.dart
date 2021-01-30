@@ -19,17 +19,24 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
-
     if(event is OnboardingNext){
-        if(value == 2){
-          yield OnboardingEnd();
-        }
-        if(value < 2){
-          _currentPageValueController.add(++value);
-          _pageController.jumpToPage(value);
-          yield OnboardingProcessing();
-        }
+
+      if(value == 2){
+        yield OnboardingEnd();
+      }
+      if(value < 2){
+        _currentPageValueController.add(++value);
+        _pageController.jumpToPage(value);
+        yield OnboardingProcessing();
+      }
     }
+
+    if(event is OnboardingSlide){
+      value = event.page;
+      _pageController.jumpToPage(value);
+      _currentPageValueController.add(value);
+    }
+
     if(event is OnboardingSkip){
       yield OnboardingEnd();
     }

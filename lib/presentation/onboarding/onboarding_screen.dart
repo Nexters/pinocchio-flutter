@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sancle/presentation/main/main_screen.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
@@ -26,17 +26,17 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
           if (state is OnboardingEnd) {
-            Navigator.pushReplacement(context, MainScreen.route());
+            Navigator.pushReplacement(context, HomeScreen.route());
           }
         },
         child: SafeArea(
+          top: false,
           child: Column(
             children: <Widget>[_pageView(), _bottomView()],
           ),
@@ -54,9 +54,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: PageView.builder(
                 controller: BlocProvider.of<OnboardingBloc>(context).pageController,
                 itemCount: _onbordingList.length,
-                // onPageChanged: (page) {
-                //   _getChangedPageAndMoveBar(page);
-                // },
+                onPageChanged: (page) {
+                  BlocProvider.of<OnboardingBloc>(context).add(OnboardingSlide(page));
+                },
                 itemBuilder: (context, index) {
                   return _onbordingList[index];
                 }),
@@ -64,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: getProportionateScreenHeight(26), right: getProportionateScreenWidth(30)),
+              padding: EdgeInsets.only(top: getProportionateScreenHeight(70), right: getProportionateScreenWidth(30)),
               child: TouchableOpacity(
                 activeOpacity: 0.6,
                 onTap: () {
