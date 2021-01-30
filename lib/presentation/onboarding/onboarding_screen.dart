@@ -5,6 +5,7 @@ import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_bloc.dart
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
 import 'package:flutter_sancle/utils/constants.dart';
+import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
@@ -28,6 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: BlocListener<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
@@ -63,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.only(top: 59, right: 16),
+              padding: const EdgeInsets.only(top: 26, right: 30),
               child: TouchableOpacity(
                 activeOpacity: 0.6,
                 onTap: () {
@@ -92,12 +94,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 300,
               decoration: BoxDecoration(
                 color: whiteColor,
               ),
               child: Column(children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: getProportionateScreenHeight(20)),
                 Stack(
                   alignment: AlignmentDirectional.topStart,
                   children: <Widget>[
@@ -111,11 +112,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               _circleBar(false),
                         ],
                       ),
-                      height: 20,
+                      height: getProportionateScreenHeight(20),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: getProportionateScreenHeight(20)),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -124,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             _mainPrompt[snapshot.data],
-                            SizedBox(height: 24.0),
+                            SizedBox(height: getProportionateScreenHeight(24)),
                             _subPrompt[snapshot.data]
                           ]),
                     )),
@@ -135,8 +136,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     BlocProvider.of<OnboardingBloc>(context).add(OnboardingNext());
                   },
                   child: Container(
-                    height: 52,
-                    width: snapshot.data < 2 ? 120 : 142,
+                    height: getProportionateScreenHeight(52),
+                    width: snapshot.data < 2 ? getProportionateScreenWidth(120) : getProportionateScreenWidth(142),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         border: Border.all(
@@ -146,30 +147,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     alignment: Alignment.center,
                     child: Wrap(children: [
                       Row(mainAxisSize: MainAxisSize.min, children: [
-                        SizedBox(width: 16),
+                        SizedBox(width: getProportionateScreenWidth(16)),
                         Text(
                           '${_buttonPrompt[snapshot.data]}',
                           style: TextStyle(
                             fontFamily: 'nanum_square',
                             fontWeight: FontWeight.w800,
                             color: sancleDarkColor,
-                            fontSize: 16,
+                            fontSize: getProportionateScreenHeight(16),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        SizedBox(width: getProportionateScreenWidth(16)),
                         Container(
                           child: SvgPicture.asset(
                             'assets/icons/arrow_logo.svg',
-                            height: 16,
+                            height: getProportionateScreenHeight(16),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        SizedBox(width: getProportionateScreenWidth(16)),
                       ])
                     ]),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: getProportionateScreenHeight(20),
                 )
               ]),
             ),
