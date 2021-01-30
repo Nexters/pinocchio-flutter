@@ -60,6 +60,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _requestLoginAfterSignUp(
       String loginType, String nickName, String socialId) async* {
+    yield LoginLoading();
     final code =
         await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
 
