@@ -13,7 +13,7 @@ class OnboardingScreen extends StatefulWidget {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<OnboardingBloc>(
         create: (context) {
-          return OnboardingBloc()..add(OnboardingCheck());
+          return OnboardingBloc()..add(OnboardingInitial());
         },
         child: OnboardingScreen(),
       )
@@ -25,20 +25,20 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  int _currentPageValue = 0;
-  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
-          if (state is OnboardingGuided) {
+          if (state is OnboardingEnd) {
             Navigator.pushReplacement(context, MainScreen.route());
           }
         },
-        child: Column(
-          children: <Widget>[_pageView(), _bottomView()],
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[_pageView(), _bottomView()],
+          ),
         ),
       ),
     );
@@ -51,11 +51,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: <Widget>[
           Container(
             child: PageView.builder(
-                controller: _pageController,
+                controller: BlocProvider.of<OnboardingBloc>(context).pageController,
                 itemCount: _onbordingList.length,
-                onPageChanged: (page) {
-                  _getChangedPageAndMoveBar(page);
-                },
+                // onPageChanged: (page) {
+                //   _getChangedPageAndMoveBar(page);
+                // },
                 itemBuilder: (context, index) {
                   return _onbordingList[index];
                 }),
@@ -67,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: TouchableOpacity(
                 activeOpacity: 0.6,
                 onTap: () {
-                  BlocProvider.of<OnboardingBloc>(context).add(OnboardingFinish());
+                  BlocProvider.of<OnboardingBloc>(context).add(OnboardingSkip());
                 },
                 child: Text(
                   '건너뛰기',
@@ -82,101 +82,101 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _bottomView() {
-    return Expanded(
-      flex: 4,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 300,
-          decoration: BoxDecoration(
-            color: whiteColor,
-          ),
-          child: Column(children: <Widget>[
-            SizedBox(height: 20),
-            Stack(
-              alignment: AlignmentDirectional.topStart,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      for (int i = 0; i < _onbordingList.length; i++)
-                        if (i == _currentPageValue) ...[_circleBar(true)] else
-                          _circleBar(false),
-                    ],
-                  ),
-                  height: 20,
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        _mainPrompt[_currentPageValue],
-                        SizedBox(height: 24.0),
-                        _subPrompt[_currentPageValue]
-                      ]),
-                )),
-            Expanded(child: Container()),
-            TouchableOpacity(
-              activeOpacity: 0.6,
-              onTap: () {
-                if (_currentPageValue == 2) {
-
-                }
-                if (_currentPageValue < 2) {
-                  print('$_currentPageValue');
-                  _getChangedPageAndMoveBar(_currentPageValue + 1);
-                  _pageController.jumpToPage(_currentPageValue);
-                }
-              },
-              child: Container(
-                height: 52,
-                width: _currentPageValue < 2 ? 120 : 142,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    border: Border.all(
-                      width: 0.5,
-                      color: buttonBorderDarkColor,
-                    )),
-                alignment: Alignment.center,
-                child: Wrap(children: [
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    SizedBox(width: 16),
-                    Text(
-                      '${_buttonPrompt[_currentPageValue]}',
-                      style: TextStyle(
-                        fontFamily: 'nanum_square',
-                        fontWeight: FontWeight.w800,
-                        color: sancleDarkColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Container(
-                      child: SvgPicture.asset(
-                        'assets/icons/arrow_logo.svg',
-                        height: 16,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                  ])
-                ]),
+    return StreamBuilder<int>(
+      stream: BlocProvider.of<OnboardingBloc>(context).currentPageValue,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+        print('do');
+        return Expanded(
+          flex: 4,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              decoration: BoxDecoration(
+                color: whiteColor,
               ),
+              child: Column(children: <Widget>[
+                SizedBox(height: 20),
+                Stack(
+                  alignment: AlignmentDirectional.topStart,
+                  children: <Widget>[
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          for (int i = 0; i < _onbordingList.length; i++)
+                            if (i == snapshot.data) ...[_circleBar(true)] else
+                              _circleBar(false),
+                        ],
+                      ),
+                      height: 20,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 24),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _mainPrompt[snapshot.data],
+                            SizedBox(height: 24.0),
+                            _subPrompt[snapshot.data]
+                          ]),
+                    )),
+                Expanded(child: Container()),
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  onTap: () {
+                    BlocProvider.of<OnboardingBloc>(context).add(OnboardingNext());
+                  },
+                  child: Container(
+                    height: 52,
+                    width: snapshot.data < 2 ? 120 : 142,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        border: Border.all(
+                          width: 0.5,
+                          color: buttonBorderDarkColor,
+                        )),
+                    alignment: Alignment.center,
+                    child: Wrap(children: [
+                      Row(mainAxisSize: MainAxisSize.min, children: [
+                        SizedBox(width: 16),
+                        Text(
+                          '${_buttonPrompt[snapshot.data]}',
+                          style: TextStyle(
+                            fontFamily: 'nanum_square',
+                            fontWeight: FontWeight.w800,
+                            color: sancleDarkColor,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Container(
+                          child: SvgPicture.asset(
+                            'assets/icons/arrow_logo.svg',
+                            height: 16,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                      ])
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                )
+              ]),
             ),
-            SizedBox(
-              height: 20,
-            )
-          ]),
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -322,10 +322,4 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   final List<String> _buttonPrompt = ['다음', '다음', '시작하기'];
-
-  void _getChangedPageAndMoveBar(int page) {
-    setState(() {
-      _currentPageValue = page;
-    });
-  }
 }

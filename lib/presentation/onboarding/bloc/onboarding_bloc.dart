@@ -1,34 +1,40 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
-import 'package:flutter_sancle/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  SharedPreferences _isOnboardingGuided;
+  final StreamController _currentPageValueController = StreamController<int>();
+  int value = 0;
+  Stream<int> _currentPageValueStream;
 
-  OnboardingBloc() : super(OnboardingInitial()){
-    _loadPref();
+  final _pageController = PageController();
+
+  OnboardingBloc() : super(OnboardingStart()){
+    _currentPageValueStream = _currentPageValueController.stream;
   }
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
-    if(event is OnboardingFinish){
-      _isOnboardingGuided.setBool(ONBOARDING_FLAG, true);
-      yield OnboardingGuided();
-    }
 
-    if(event is OnboardingCheck){
-      if(_isOnboardingGuided.getBool(ONBOARDING_FLAG)){
-        yield OnboardingGuided();
-      }
-      else{
-        yield OnboardingBefore();
-      }
+    if(event is OnboardingNext){
+        if(value == 2){
+          yield OnboardingEnd();
+        }
+        if(value < 2){
+          _currentPageValueController.add(++value);
+          _pageController.jumpToPage(value);
+          yield OnboardingProcessing();
+        }
+    }
+    if(event is OnboardingSkip){
+      yield OnboardingEnd();
     }
   }
 
-  void _loadPref() async{
-    _isOnboardingGuided = await SharedPreferences.getInstance();
-  }
+  Stream<int> get currentPageValue => _currentPageValueStream;
+  get pageController => _pageController;
 }
