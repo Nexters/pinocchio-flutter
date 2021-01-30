@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/repository/onboarding_repository.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_event.dart';
 import 'package:flutter_sancle/presentation/onboarding/bloc/onboarding_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final StreamController _currentPageValueController = StreamController<int>();
@@ -21,6 +21,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
     if (event is OnboardingNext) {
       if (value == 2) {
+        OnboardingRepository().setIsGuide(true);
         yield OnboardingEnd();
       }
       if (value < 2) {
@@ -37,6 +38,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
 
     if (event is OnboardingSkip) {
+      OnboardingRepository().setIsGuide(true);
       yield OnboardingEnd();
     }
   }
