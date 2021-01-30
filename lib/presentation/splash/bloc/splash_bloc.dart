@@ -17,7 +17,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       final tokenResponse = await _authRepository.getUserToken();
       await Future.delayed(Duration(seconds: 2));
       if (tokenResponse == null ||
-          tokenResponse.expiredDate < DateTime.now().millisecondsSinceEpoch) {
+          DateTime.parse(tokenResponse.expireDateTime).millisecondsSinceEpoch <
+              DateTime.now().millisecondsSinceEpoch) {
         bool isAlreadyShownGuide = await _onboardingRepository.getIsGuide();
         yield UserTokenCheckedFailure(isAlreadyShownGuide);
       } else {
