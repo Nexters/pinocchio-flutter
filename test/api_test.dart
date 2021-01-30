@@ -37,4 +37,16 @@ void main() {
       print(e);
     }
   });
+
+  test('로그인 테스트', () async {
+    try {
+      String loginType = "KAKAO";
+      String socialId = "1231234";
+      Response response = await _dio.post(_baseUrl + "/auth/login",
+          queryParameters: {"loginType": loginType, "socialId": socialId});
+      expect(response.statusCode, 200);
+    } on DioError catch (e) {
+      print(e);
+    }
+  });
 }
