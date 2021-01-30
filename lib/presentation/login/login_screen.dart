@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
@@ -15,7 +16,7 @@ class LoginScreen extends StatefulWidget {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<LoginBloc>(
         create: (context) {
-          return LoginBloc()..add(KakaoTalkInstalled());
+          return LoginBloc(LoginRepository())..add(KakaoTalkInstalled());
         },
         child: LoginScreen(),
       ),
