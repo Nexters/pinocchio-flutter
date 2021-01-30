@@ -17,10 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("메인"),
-        centerTitle: true,
-      ),
       body: Center(child: Text('메인 화면')),
     );
   }
