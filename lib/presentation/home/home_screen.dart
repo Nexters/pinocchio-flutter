@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static Route route() {
     return MaterialPageRoute(
       builder: (context) {
-        return MainScreen();
+        return HomeScreen();
       },
     );
   }
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
