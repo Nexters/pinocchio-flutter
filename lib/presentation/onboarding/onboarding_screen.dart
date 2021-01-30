@@ -29,7 +29,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       body: BlocListener<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
@@ -65,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.only(top: 26, right: 30),
+              padding: EdgeInsets.only(top: getProportionateScreenHeight(26), right: getProportionateScreenWidth(30)),
               child: TouchableOpacity(
                 activeOpacity: 0.6,
                 onTap: () {
@@ -120,7 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 24),
+                      padding: EdgeInsets.only(left: getProportionateScreenWidth(24)),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -198,9 +197,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _circleBar(bool isActive) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      height: 8,
-      width: 8,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      height: getProportionateScreenHeight(8),
+      width: getProportionateScreenWidth(8),
       decoration: BoxDecoration(
           color: isActive ? pageIndicatorSelectColor : whiteColor,
           border: Border.all(
@@ -214,14 +213,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Text.rich(TextSpan(
         text: '옷 세탁법',
         style: TextStyle(
-            fontSize: 30,
+            fontSize: getProportionateScreenHeight(30),
             fontWeight: FontWeight.w700,
             fontFamily: 'nanum_square'),
         children: <TextSpan>[
           TextSpan(
             text: '이 궁금하세요?',
             style: TextStyle(
-                fontSize: 30,
+                fontSize: getProportionateScreenHeight(30),
                 fontWeight: FontWeight.w300,
                 fontFamily: 'nanum_square'),
           )
@@ -232,25 +231,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Text.rich(TextSpan(
             text: '찍힌 라벨',
             style: TextStyle(
-                fontSize: 30,
+                fontSize: getProportionateScreenHeight(30),
                 fontWeight: FontWeight.w700,
                 fontFamily: 'nanum_square'),
             children: <TextSpan>[
               TextSpan(
                 text: '이',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: getProportionateScreenHeight(30),
                     fontWeight: FontWeight.w300,
                     fontFamily: 'nanum_square'),
               )
             ])),
         SizedBox(
-          height: 12,
+          height: getProportionateScreenHeight(12),
         ),
         Text(
           '맞는지 확인해주세요',
           style: TextStyle(
-              fontSize: 30,
+              fontSize: getProportionateScreenHeight(30),
               fontWeight: FontWeight.w300,
               fontFamily: 'nanum_square'),
         )
@@ -262,24 +261,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Text(
           '보관함에 라벨을',
           style: TextStyle(
-              fontSize: 30,
+              fontSize: getProportionateScreenHeight(30),
               fontWeight: FontWeight.w300,
               fontFamily: 'nanum_square'),
         ),
         SizedBox(
-          height: 12,
+          height: getProportionateScreenHeight(12),
         ),
         Text.rich(TextSpan(
             text: '저장',
             style: TextStyle(
-                fontSize: 30,
+                fontSize: getProportionateScreenHeight(30),
                 fontWeight: FontWeight.w700,
                 fontFamily: 'nanum_square'),
             children: <TextSpan>[
               TextSpan(
                 text: '할 수 있어요',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: getProportionateScreenHeight(30),
                     fontWeight: FontWeight.w300,
                     fontFamily: 'nanum_square'),
               )
@@ -292,7 +291,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Text('카메라 버튼을 눌러 라벨을 찍어보세요',
         textAlign: TextAlign.left,
         style: TextStyle(
-            fontSize: 16,
+            fontSize: getProportionateScreenHeight(16),
             fontFamily: 'nanum_square',
             fontWeight: FontWeight.w300)),
     Column(
@@ -301,14 +300,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Text('산클에서 라벨 이미지를 분석하여',
             textAlign: TextAlign.left,
             style: TextStyle(
-                fontSize: 16,
+                fontSize: getProportionateScreenHeight(16),
                 fontFamily: 'nanum_square',
                 fontWeight: FontWeight.w300)),
-        SizedBox(height: 10),
+        SizedBox(height: getProportionateScreenHeight(10)),
         Text('세탁법과 상세 정보를 알려준답니다!',
             textAlign: TextAlign.left,
             style: TextStyle(
-                fontSize: 16,
+                fontSize: getProportionateScreenHeight(16),
                 fontFamily: 'nanum_square',
                 fontWeight: FontWeight.w300)),
       ],
@@ -316,7 +315,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Text('이전에 찍었던 라벨 정보를 다시 확인할 수 있어요',
         textAlign: TextAlign.left,
         style: TextStyle(
-            fontSize: 16,
+            fontSize: getProportionateScreenHeight(16),
             fontFamily: 'nanum_square',
             fontWeight: FontWeight.w300)),
   ];
