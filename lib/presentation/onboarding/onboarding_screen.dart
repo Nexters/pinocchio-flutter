@@ -86,7 +86,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       stream: BlocProvider.of<OnboardingBloc>(context).currentPageValue,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot){
-        print('do');
         return Expanded(
           flex: 4,
           child: Align(
