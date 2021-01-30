@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/login/login_screen.dart';
 import 'package:flutter_sancle/presentation/onboarding/onboarding_screen.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: BlocListener<SplashBloc, SplashState>(
         listener: (context, state) {
           if (state is UserTokenCheckedSuccess) {
-            Navigator.pushReplacement(context, OnboardingScreen.route());
+            Navigator.pushReplacement(context, HomeScreen.route());
           } else if (state is UserTokenCheckedFailure) {
             if (state.isAlreadyShownGuide) {
               Navigator.pushReplacement(context, LoginScreen.route());

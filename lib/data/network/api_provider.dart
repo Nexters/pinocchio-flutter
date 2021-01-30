@@ -27,6 +27,7 @@ class ApiProvider {
     }
   }
 
+  /// 회원가입 요청 */
   Future<int> postAuthRegister(
       String loginType, String nickName, String socialId) async {
     try {
@@ -43,6 +44,17 @@ class ApiProvider {
       } else {
         throw e;
       }
+    }
+  }
+
+  /// 로그인 요청 */
+  Future<TokenResponse> postAuthLogin(String loginType, String socialId) async {
+    try {
+      Response response = await _dio.post(_baseUrl + "/auth/login",
+          queryParameters: {"loginType": loginType, "socialId": socialId});
+      return TokenResponse.fromJson(response.data);
+    } on DioError catch (e) {
+      throw e;
     }
   }
 }

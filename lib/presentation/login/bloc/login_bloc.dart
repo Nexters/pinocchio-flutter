@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/model/token_response.dart';
+import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
 import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_state.dart';
@@ -22,15 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final user = await UserApi.instance.me();
         final userId = user.id.toString();
         final userNickname = user.kakaoAccount.profile.nickname;
-
-        final code = await _loginRepository.postAuthRegister(
-            "KAKAO", userNickname, userId);
-
-        if (code == 201 || code == 409) {
-          // TODO 로그인 API 호출
-        } else {
-          yield UserLoginFailure();
-        }
+        yield* _requestLoginAfterSignUp("KAKAO", userNickname, userId);
       } catch (e) {
         yield UserLoginFailure();
       }
@@ -61,6 +55,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _issueAccessToken(code);
     } catch (e) {
       await _loginWithKakao();
+    }
+  }
+
+  Stream<LoginState> _requestLoginAfterSignUp(
+      String loginType, String nickName, String socialId) async* {
+    final code =
+        await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
+
+    if (code == 201 || code == 409) {
+      bool isLoginSuccess =
+          await _loginRepository.postAuthLogin("KAKAO", socialId);
+      if (isLoginSuccess) {
+        yield UserLoginSuccess();
+      } else {
+        yield UserLoginFailure();
+      }
+    } else {
+      yield UserLoginFailure();
     }
   }
 }
