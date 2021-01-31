@@ -24,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final user = await UserApi.instance.me();
         final userId = user.id.toString();
         final userNickname = user.kakaoAccount.profile.nickname;
-        yield* _requestLoginAfterSignUp("KAKAO", userNickname, userId);
+        yield* _requestLoginAfterSignUp("KAKAO", userNickname, "123141423");
       } catch (e) {
         yield UserLoginFailure();
       }
@@ -60,18 +60,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> _requestLoginAfterSignUp(
       String loginType, String nickName, String socialId) async* {
-    yield LoginLoading();
-    final code =
-        await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
+    try {
+      yield LoginLoading();
+      final code =
+          await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
 
-    if (code == 201 || code == 409) {
-      bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
-      if (isLoginSuccess) {
-        yield UserLoginSuccess();
+      if (code == 201 || code == 409) {
+        bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
+        if (isLoginSuccess) {
+          yield UserLoginSuccess();
+        } else {
+          yield UserLoginFailure();
+        }
       } else {
         yield UserLoginFailure();
       }
-    } else {
+    } catch (e) {
       yield UserLoginFailure();
     }
   }
