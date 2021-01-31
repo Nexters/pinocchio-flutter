@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         stream: BlocProvider.of<HomeBloc>(context).currentPage,
                         builder: (context, snapshot) {
                           return Container(
-                            padding: EdgeInsets.only(top: 17, left: 24),
+                            padding: EdgeInsets.only(top: getProportionateScreenHeight(17), left: getProportionateScreenWidth(24)),
                             child: Row(
                               children: <Widget>[
                                 for (int i = 0; i < _prompt.length; i++)
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: 24, right: 59, top: 18),
+                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(18)),
                                     child: Text(
                                       _prompt[index][0],
                                       style: TextStyle(
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: 24, right: 59, top: 10),
+                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(10)),
                                     child: Text(
                                       _prompt[index][1],
                                       style: TextStyle(
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: 24, right: 59, top: 12),
+                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(12)),
                                     child: Text(
                                       _prompt[index][2],
                                       style: TextStyle(
@@ -181,7 +181,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
             Positioned(
               right: MediaQuery.of(context).size.width * 0.064,
-              top: MediaQuery.of(context).size.height * 0.73,
+              top: getProportionateScreenHeight(570),
+              height: getProportionateScreenHeight(76),
+              width: getProportionateScreenWidth(76),
               child: Image.asset('assets/images/camera.png'),
             )
           ]),
