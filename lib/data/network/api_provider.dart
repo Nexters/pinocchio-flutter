@@ -48,10 +48,10 @@ class ApiProvider {
   }
 
   /// 로그인 요청 */
-  Future<TokenResponse> postAuthLogin(String loginType, String socialId) async {
+  Future<TokenResponse> postAuthLogin(String socialId) async {
     try {
       Response response = await _dio.post(_baseUrl + "/auth/login",
-          queryParameters: {"loginType": loginType, "socialId": socialId});
+          queryParameters: {"socialId": socialId});
       return TokenResponse.fromJson(response.data);
     } on DioError catch (e) {
       throw e;

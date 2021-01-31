@@ -9,10 +9,10 @@ class LoginRepository {
     return ApiProvider.instance.postAuthRegister(loginType, nickName, socialId);
   }
 
-  Future<bool> postAuthLogin(String loginType, String socialId) async {
+  Future<bool> postAuthLogin(String socialId) async {
     try {
       TokenResponse tokenResponse =
-          await ApiProvider.instance.postAuthLogin(loginType, socialId);
+          await ApiProvider.instance.postAuthLogin(socialId);
       return await UserTokenManger.instance.setUserToken(tokenResponse);
     } on DioError catch (e) {
       throw e;

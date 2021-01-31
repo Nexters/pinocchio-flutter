@@ -21,7 +21,7 @@ void main() {
     try {
       String loginType = "KAKAO";
       String nickName = "테스트 계정1";
-      String socialId = "1231234";
+      String socialId = "123123";
       Response response = await _dio.post(_baseUrl + "/auth/register",
           queryParameters: {
             "loginType": loginType,
@@ -40,10 +40,9 @@ void main() {
 
   test('로그인 테스트', () async {
     try {
-      String loginType = "KAKAO";
-      String socialId = "1231234";
+      String socialId = "123123";
       Response response = await _dio.post(_baseUrl + "/auth/login",
-          queryParameters: {"loginType": loginType, "socialId": socialId});
+          queryParameters: {"socialId": socialId});
       expect(response.statusCode, 200);
     } on DioError catch (e) {
       print(e);

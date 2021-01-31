@@ -65,8 +65,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
 
     if (code == 201 || code == 409) {
-      bool isLoginSuccess =
-          await _loginRepository.postAuthLogin("KAKAO", socialId);
+      bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
       if (isLoginSuccess) {
         yield UserLoginSuccess();
       } else {
