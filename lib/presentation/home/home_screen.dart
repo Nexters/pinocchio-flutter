@@ -111,26 +111,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       StreamBuilder<int>(
-                        stream: BlocProvider.of<HomeBloc>(context).currentPage,
-                        builder: (context, snapshot) {
-                          return Container(
-                            padding: EdgeInsets.only(top: getProportionateScreenHeight(17), left: getProportionateScreenWidth(24)),
-                            child: Row(
-                              children: <Widget>[
-                                for (int i = 0; i < _prompt.length; i++)
-                                  if (i == snapshot.data) ...[_circleBar(true)] else
-                                    _circleBar(false),
-                              ],
-                            ),
-                          );
-                        }
-                      ),
+                          stream:
+                              BlocProvider.of<HomeBloc>(context).currentPage,
+                          initialData: 0,
+                          builder: (context, snapshot) {
+                            return Container(
+                              padding: EdgeInsets.only(
+                                  top: getProportionateScreenHeight(17),
+                                  left: getProportionateScreenWidth(24)),
+                              child: Row(
+                                children: <Widget>[
+                                  for (int i = 0; i < _prompt.length; i++)
+                                    if (i == snapshot.data) ...[
+                                      _circleBar(true)
+                                    ] else
+                                      _circleBar(false),
+                                ],
+                              ),
+                            );
+                          }),
                       Expanded(
                         child: PageView.builder(
-                            controller: BlocProvider.of<HomeBloc>(context).pageController,
+                            controller: BlocProvider.of<HomeBloc>(context)
+                                .pageController,
                             itemCount: _prompt.length,
                             onPageChanged: (page) {
-                              BlocProvider.of<HomeBloc>(context).add(HomePageSlide(page));
+                              BlocProvider.of<HomeBloc>(context)
+                                  .add(HomePageSlide(page));
                             },
                             itemBuilder: (context, index) {
                               return Column(
@@ -138,7 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(18)),
+                                        left: getProportionateScreenWidth(24),
+                                        right: getProportionateScreenWidth(59),
+                                        top: getProportionateScreenHeight(18)),
                                     child: Text(
                                       _prompt[index][0],
                                       style: TextStyle(
@@ -150,7 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(10)),
+                                        left: getProportionateScreenWidth(24),
+                                        right: getProportionateScreenWidth(59),
+                                        top: getProportionateScreenHeight(10)),
                                     child: Text(
                                       _prompt[index][1],
                                       style: TextStyle(
@@ -162,7 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(59), top: getProportionateScreenHeight(12)),
+                                        left: getProportionateScreenWidth(24),
+                                        right: getProportionateScreenWidth(59),
+                                        top: getProportionateScreenHeight(12)),
                                     child: Text(
                                       _prompt[index][2],
                                       style: TextStyle(
@@ -207,8 +220,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<List<String>> _prompt = [
-    ['산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8','라벨을 10개 찍으면 상품이 팡!','산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'],
-    ['산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8','라벨을 10개 찍으면 상품이 팡!','산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'],
-    ['산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8','라벨을 10개 찍으면 상품이 팡!','산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8']
+    [
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8',
+      '라벨을 10개 찍으면 상품이 팡!',
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'
+    ],
+    [
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8',
+      '라벨을 10개 찍으면 상품이 팡!',
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'
+    ],
+    [
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트 8',
+      '라벨을 10개 찍으면 상품이 팡!',
+      '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'
+    ]
   ];
 }
