@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontFamily: 'nanum_square'),
                         )
                       ])),
-                  SizedBox(height: 12),
+                  SizedBox(height: getProportionateScreenHeight(12)),
                   Text(
                     '안녕하세요!',
                     style: TextStyle(
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w300,
                         fontFamily: 'nanum_square'),
                   ),
-                  SizedBox(height: 32),
+                  SizedBox(height: getProportionateScreenHeight(32)),
                   Text(
                     '현재 산타클로즈에 쌓인 옷',
                     style: TextStyle(
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w400,
                         fontFamily: 'nanum_square'),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: getProportionateScreenHeight(10)),
                   Text(
                     '100,000벌!',
                     style: TextStyle(
