@@ -45,8 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
               top: MediaQuery.of(context).size.height * 0.079,
               child: Image.asset(
                 'assets/icons/mypage.png',
-                width: 38,
-                height: 44,
+                width: getProportionateScreenWidth(38),
+                height: getProportionateScreenHeight(44),
               ),
             ),
             Padding(
