@@ -12,3 +12,5 @@ class HomePageSlide extends HomeEvent {
 
   HomePageSlide(this.page);
 }
+
+class HomeToMypage extends HomeEvent {}

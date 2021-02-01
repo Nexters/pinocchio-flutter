@@ -12,17 +12,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final _pageController = PageController();
 
-  HomeBloc() : super(HomeStart()){
+  HomeBloc() : super(HomeStart()) {
     _currentPageStream = _currentPageController.stream;
   }
 
   @override
-  Stream<HomeState> mapEventToState(HomeEvent event) {
+  Stream<HomeState> mapEventToState(HomeEvent event) async* {
     // TODO: implement mapEventToState
-    if(event is HomePageSlide){
+    if (event is HomePageSlide) {
       page = event.page;
       _pageController.jumpToPage(page);
       _currentPageController.add(page);
+    }
+
+    if (event is HomeToMypage) {
+      yield MypageStart();
     }
   }
 

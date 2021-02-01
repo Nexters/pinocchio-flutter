@@ -5,3 +5,5 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeStart extends HomeState {}
+
+class MypageStart extends HomeState {}

@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_state.dart';
+import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
+import 'package:flutter_sancle/presentation/mypage/mypage_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:imagebutton/imagebutton.dart';
+import 'package:touchable_opacity/touchable_opacity.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() {
@@ -29,7 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<HomeBloc, HomeState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is MypageStart) {
+            Navigator.pushReplacement(context, MyPageScreen.route());
+          }
+        },
         child: SafeArea(
           top: false,
           child: Stack(children: <Widget>[
@@ -41,14 +48,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              right: MediaQuery.of(context).size.width * 0.0826,
-              top: MediaQuery.of(context).size.height * 0.079,
-              child: Image.asset(
-                'assets/icons/mypage.png',
-                width: getProportionateScreenWidth(38),
-                height: getProportionateScreenHeight(44),
-              ),
-            ),
+                right: MediaQuery.of(context).size.width * 0.0826,
+                top: MediaQuery.of(context).size.height * 0.079,
+                child: TouchableOpacity(
+                  activeOpacity: 0.6,
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(context).add(HomeToMypage());
+                  },
+                  child: Image.asset(
+                    'assets/icons/mypage.png',
+                    width: getProportionateScreenWidth(38),
+                    height: getProportionateScreenHeight(44),
+                  ),
+                )),
             Padding(
               padding: EdgeInsets.only(
                   top: getProportionateScreenHeight(70),
@@ -197,12 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
               right: MediaQuery.of(context).size.width * 0.064,
               top: getProportionateScreenHeight(570),
               child: ImageButton(
-                children: <Widget>[],
-                height: getProportionateScreenHeight(76),
-                width: getProportionateScreenWidth(76),
-                pressedImage: Image.asset('assets/images/camera_press.png'),
-                unpressedImage: Image.asset('assets/images/camera.png')
-              ),
+                  children: <Widget>[],
+                  height: getProportionateScreenHeight(76),
+                  width: getProportionateScreenWidth(76),
+                  pressedImage: Image.asset('assets/images/camera_press.png'),
+                  unpressedImage: Image.asset('assets/images/camera.png')),
               // child: Image.asset('assets/images/camera.png'),
             )
           ]),
