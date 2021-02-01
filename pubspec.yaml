@@ -36,6 +36,7 @@ dependencies:
   touchable_opacity: 1.1.2
   flutter_svg: 0.19.1
   lottie: ^0.7.0+1
+  imagebutton: ^0.0.6
 
 dev_dependencies:
   flutter_test:
