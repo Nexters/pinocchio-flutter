@@ -5,6 +5,7 @@ import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_state.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
+import 'package:imagebutton/imagebutton.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() {
@@ -195,9 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               right: MediaQuery.of(context).size.width * 0.064,
               top: getProportionateScreenHeight(570),
-              height: getProportionateScreenHeight(76),
-              width: getProportionateScreenWidth(76),
-              child: Image.asset('assets/images/camera.png'),
+              child: ImageButton(
+                children: <Widget>[],
+                height: getProportionateScreenHeight(76),
+                width: getProportionateScreenWidth(76),
+                pressedImage: Image.asset('assets/images/camera_press.png'),
+                unpressedImage: Image.asset('assets/images/camera.png')
+              ),
+              // child: Image.asset('assets/images/camera.png'),
             )
           ]),
         ),
