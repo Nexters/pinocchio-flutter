@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_sancle/data/model/token_response.dart';
 import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
@@ -43,37 +44,31 @@ class DioClient {
           return response;
         },
         onError: (DioError error) async {
-          if (error.response?.statusCode == 401) {
-            RequestOptions options = error.response.request;
-
-            _dio.lock();
-            _dio.interceptors.requestLock.lock();
-            _dio.interceptors.responseLock.lock();
-            _dio.interceptors.errorLock.lock();
-
-            TokenResponse token = await UserTokenManger.instance.getUserToken();
-            if (token == null) {
-              return error;
-            }
-
-            return Dio().put(BASE_URL + "/auth/accessToken", queryParameters: {
-              "refreshToken": token.refreshToken
-            }).then((response) async {
-              TokenResponse tokenResponse =
-                  TokenResponse.fromJson(response.data);
-              if (tokenResponse == null) {
+          final token = await UserTokenManger.instance.getUserToken();
+          _dio.interceptors.errorLock.lock();
+          if (token == null) {
+            _dio.interceptors.errorLock.unlock();
+            return error;
+          } else if (error.response?.statusCode == 401) {
+            try {
+              _dio.interceptors.requestLock.lock();
+              RequestOptions options = error.response.request;
+              final response = await Dio().put(BASE_URL + "/auth/accessToken",
+                  data: jsonEncode({"refreshToken": token.refreshToken}));
+              final newTokenResponse = TokenResponse.fromJson(response.data);
+              if (newTokenResponse == null) {
                 return error;
               }
-              await UserTokenManger.instance.setUserToken(tokenResponse);
-              options.headers["Authorization"] = "Bearer " + token.accessToken;
-            }).whenComplete(() {
-              _dio.unlock();
-              _dio.interceptors.requestLock.unlock();
-              _dio.interceptors.responseLock.unlock();
-              _dio.interceptors.errorLock.unlock();
-            }).then((value) {
+              await UserTokenManger.instance.setUserToken(newTokenResponse);
+              options.headers["Authorization"] =
+                  "Bearer " + newTokenResponse.accessToken;
               return _dio.request(options.path, options: options);
-            });
+            } catch (e) {
+              return error;
+            } finally {
+              _dio.interceptors.requestLock.unlock();
+              _dio.interceptors.errorLock.unlock();
+            }
           }
           return error;
         },
