@@ -18,15 +18,10 @@ class SizeConfig {
 }
 
 // Get the proportionate height as per screen size
-double getProportionateScreenHeight(double inputHeight, {bool isFull}) {
-  double standardHeight = 778.0;
+double getProportionateScreenHeight(double inputHeight, {bool isFull = false}) {
+  double standardHeight = isFull ? 812.0 : 778.0;
   double screenHeight = SizeConfig.screenHeight;
 
-  if(isFull != null){
-    if(isFull){
-      standardHeight = 812.0;
-    }
-  }
   // Our designer use iPhone 11, that's why we use 896.0
   return (inputHeight / standardHeight) * screenHeight;
 }
