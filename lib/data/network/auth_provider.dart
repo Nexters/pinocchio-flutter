@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_sancle/data/model/token_response.dart';
 import 'package:flutter_sancle/data/network/dio_client.dart';
@@ -14,13 +16,14 @@ class AuthProvider {
   Future<int> postAuthRegister(
       String loginType, String nickName, String socialId) async {
     try {
+      var params = {
+        "loginType": loginType,
+        "nickName": nickName,
+        "socialId": socialId
+      };
       final dio = await DioClient.instance.getDefaultClient();
-      Response response = await dio.post(BASE_URL + "/auth/register",
-          queryParameters: {
-            "loginType": loginType,
-            "nickName": nickName,
-            "socialId": socialId
-          });
+      Response response =
+          await dio.post(BASE_URL + "/auth/register", data: jsonEncode(params));
       return response.statusCode;
     } on DioError catch (e) {
       if (e.response?.statusCode == 409) {
@@ -36,7 +39,7 @@ class AuthProvider {
     try {
       final _dio = await DioClient.instance.getDefaultClient();
       Response response = await _dio.post(BASE_URL + "/auth/login",
-          queryParameters: {"socialId": socialId});
+          data: jsonEncode({"socialId": socialId}));
       return TokenResponse.fromJson(response.data);
     } on DioError catch (e) {
       throw e;

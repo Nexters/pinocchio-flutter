@@ -1,6 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sancle/data/model/token_response.dart';
-import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
 import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_state.dart';
@@ -24,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final user = await UserApi.instance.me();
         final userId = user.id.toString();
         final userNickname = user.kakaoAccount.profile.nickname;
-        yield* _requestLoginAfterSignUp("KAKAO", userNickname, "123141423");
+        yield* _requestLoginAfterSignUp("KAKAO", userNickname, userId);
       } catch (e) {
         yield UserLoginFailure();
       }
