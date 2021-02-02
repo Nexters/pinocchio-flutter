@@ -36,7 +36,7 @@ class DioClient {
           if (token == null) {
             return options;
           }
-          options.headers["Authorization"] = "Bearer " + token.authToken;
+          options.headers["Authorization"] = "Bearer " + token.accessToken;
           return options;
         },
         onResponse: (Response response) {
@@ -56,7 +56,7 @@ class DioClient {
               return error;
             }
 
-            return Dio().put(BASE_URL + "/auth/authToken", queryParameters: {
+            return Dio().put(BASE_URL + "/auth/accessToken", queryParameters: {
               "refreshToken": token.refreshToken
             }).then((response) async {
               TokenResponse tokenResponse =
@@ -65,7 +65,7 @@ class DioClient {
                 return error;
               }
               await UserTokenManger.instance.setUserToken(tokenResponse);
-              options.headers["Authorization"] = "Bearer " + token.authToken;
+              options.headers["Authorization"] = "Bearer " + token.accessToken;
             }).whenComplete(() {
               _dio.unlock();
               _dio.interceptors.requestLock.unlock();
