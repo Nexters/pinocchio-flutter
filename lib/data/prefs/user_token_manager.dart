@@ -12,9 +12,9 @@ class UserTokenManger {
 
   UserTokenManger._internal();
 
-  Future<void> setUserToken(TokenResponse tokenResponse) async {
+  Future<bool> setUserToken(TokenResponse tokenResponse) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(PREF_USER_TOKEN, jsonEncode(tokenResponse));
+    return await prefs.setString(PREF_USER_TOKEN, jsonEncode(tokenResponse));
   }
 
   Future<TokenResponse> getUserToken() async {

@@ -1,38 +1,36 @@
-class TokenResponse {
-  int _userIdx;
-  String _accessToken;
-  String _refreshToken;
-  int _expiredDate;
+/// accessToken : "2fc85855-0480-472e-9d68-8f3cb8affd78"
+/// refreshToken : "4d214b30-469b-448c-8c92-4d37290e3333"
+/// expireDateTime : "2021-01-30T10:26:28.890Z"
 
-  int get userIdx => _userIdx;
+class TokenResponse {
+  String _accessToken;
+  String _expireDateTime;
+  String _refreshToken;
 
   String get accessToken => _accessToken;
 
+  String get expireDateTime => _expireDateTime;
+
   String get refreshToken => _refreshToken;
 
-  int get expiredDate => _expiredDate;
-
   TokenResponse(
-      {int userIdx, String accessToken, String refreshToken, int expiredDate}) {
-    _userIdx = userIdx;
+      {String accessToken, String expireDateTime, String refreshToken}) {
     _accessToken = accessToken;
+    _expireDateTime = expireDateTime;
     _refreshToken = refreshToken;
-    _expiredDate = expiredDate;
   }
 
   TokenResponse.fromJson(dynamic json) {
-    _userIdx = json["userIdx"];
     _accessToken = json["accessToken"];
+    _expireDateTime = json["expireDateTime"];
     _refreshToken = json["refreshToken"];
-    _expiredDate = json["expiredDate"];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map["userIdx"] = _userIdx;
     map["accessToken"] = _accessToken;
+    map["expireDateTime"] = _expireDateTime;
     map["refreshToken"] = _refreshToken;
-    map["expiredDate"] = _expiredDate;
     return map;
   }
 }

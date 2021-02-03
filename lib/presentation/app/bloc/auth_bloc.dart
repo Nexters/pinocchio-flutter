@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/repository/auth_repository.dart';
-
+import 'package:flutter_sancle/presentation/login/login_screen.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -12,9 +14,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     if (event is LogoutRequested) {
-      // TODO 카카오 로그인 정보 삭제 작업
+      await UserApi.instance.logout();
+      await AccessTokenStore.instance.clear();
       await _authRepository.deleteUserToken();
-      // TODO 로그인 화면 전환 작업
+      Navigator.pushAndRemoveUntil(
+          event.context, LoginScreen.route(), (route) => false);
     }
   }
 }
