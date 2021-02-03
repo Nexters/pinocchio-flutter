@@ -62,8 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     BlocProvider.of<HomeBloc>(context).add(HomeToMypage());
                   },
-                  child: SvgPicture.asset('assets/icons/my_page.svg',
-                      width: 52, height: 52),
+                  child: SvgPicture.asset(
+                    'assets/icons/my_page.svg',
+                    width: getProportionateScreenHeight(52),
+                    height: getProportionateScreenHeight(52),
+                  ),
                 )),
             Padding(
               padding: EdgeInsets.only(
@@ -218,8 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               right: getProportionateScreenWidth(19),
               bottom: getProportionateScreenHeight(127),
-              width: 86,
-              height: 86,
+              width: getProportionateScreenHeight(86),
+              height: getProportionateScreenHeight(86),
               child: GestureDetector(
                   onTapCancel: () {
                     setState(() {
