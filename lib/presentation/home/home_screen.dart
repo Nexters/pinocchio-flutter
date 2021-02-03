@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_state.dart';
-import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/mypage_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
-import 'package:imagebutton/imagebutton.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,9 +26,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController controller = new PageController();
+  SvgPicture currentCameraSvg;
+
+  @override
+  void initState() {
+    super.initState();
+    currentCameraSvg = SvgPicture.asset('assets/images/camera_unpressed.svg');
+  }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
@@ -48,18 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-                right: MediaQuery.of(context).size.width * 0.0826,
-                top: MediaQuery.of(context).size.height * 0.079,
+                right: getProportionateScreenWidth(24),
+                top: getProportionateScreenHeight(58),
                 child: TouchableOpacity(
                   activeOpacity: 0.6,
                   onTap: () {
                     BlocProvider.of<HomeBloc>(context).add(HomeToMypage());
                   },
-                  child: Image.asset(
-                    'assets/icons/mypage.png',
-                    width: getProportionateScreenWidth(38),
-                    height: getProportionateScreenHeight(44),
-                  ),
+                  child: SvgPicture.asset('assets/icons/my_page.svg',
+                      width: 52, height: 52),
                 )),
             Padding(
               padding: EdgeInsets.only(
@@ -87,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     '안녕하세요!',
                     style: TextStyle(
-                        fontSize: getProportionateScreenHeight(30),
+                        fontSize: getProportionateScreenHeight(28),
                         fontWeight: FontWeight.w300,
                         fontFamily: 'nanum_square'),
                   ),
@@ -99,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w400,
                         fontFamily: 'nanum_square'),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: getProportionateScreenHeight(8)),
                   Text(
                     '100,000벌!',
                     style: TextStyle(
@@ -111,111 +115,133 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.216, // 168
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      StreamBuilder<int>(
-                          stream:
-                              BlocProvider.of<HomeBloc>(context).currentPage,
-                          initialData: 0,
-                          builder: (context, snapshot) {
-                            return Container(
-                              padding: EdgeInsets.only(
-                                  top: getProportionateScreenHeight(17),
-                                  left: getProportionateScreenWidth(24)),
-                              child: Row(
-                                children: <Widget>[
-                                  for (int i = 0; i < _prompt.length; i++)
-                                    if (i == snapshot.data) ...[
-                                      _circleBar(true)
-                                    ] else
-                                      _circleBar(false),
-                                ],
-                              ),
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: SizeConfig.screenWidth,
+                height: getProportionateScreenHeight(168),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    StreamBuilder<int>(
+                        stream: BlocProvider.of<HomeBloc>(context).currentPage,
+                        initialData: 0,
+                        builder: (context, snapshot) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                top: getProportionateScreenHeight(17),
+                                left: getProportionateScreenWidth(24)),
+                            child: Row(
+                              children: <Widget>[
+                                for (int i = 0; i < _prompt.length; i++)
+                                  if (i == snapshot.data) ...[
+                                    _circleBar(true)
+                                  ] else
+                                    _circleBar(false),
+                              ],
+                            ),
+                          );
+                        }),
+                    Expanded(
+                      child: PageView.builder(
+                          controller:
+                              BlocProvider.of<HomeBloc>(context).pageController,
+                          itemCount: _prompt.length,
+                          onPageChanged: (page) {
+                            BlocProvider.of<HomeBloc>(context)
+                                .add(HomePageSlide(page));
+                          },
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: getProportionateScreenWidth(24),
+                                      right: getProportionateScreenWidth(24),
+                                      top: getProportionateScreenHeight(18)),
+                                  child: Text(
+                                    _prompt[index][0],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenHeight(22),
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: 'nanum_square'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: getProportionateScreenWidth(24),
+                                      right: getProportionateScreenWidth(24),
+                                      top: getProportionateScreenHeight(10)),
+                                  child: Text(
+                                    _prompt[index][1],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenHeight(12),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'nanum_square'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: getProportionateScreenWidth(24),
+                                      right: getProportionateScreenWidth(24),
+                                      top: getProportionateScreenHeight(12)),
+                                  child: Text(
+                                    _prompt[index][2],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize:
+                                            getProportionateScreenHeight(14),
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: 'nanum_square'),
+                                  ),
+                                ),
+                              ],
                             );
                           }),
-                      Expanded(
-                        child: PageView.builder(
-                            controller: BlocProvider.of<HomeBloc>(context)
-                                .pageController,
-                            itemCount: _prompt.length,
-                            onPageChanged: (page) {
-                              BlocProvider.of<HomeBloc>(context)
-                                  .add(HomePageSlide(page));
-                            },
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24),
-                                        right: getProportionateScreenWidth(59),
-                                        top: getProportionateScreenHeight(18)),
-                                    child: Text(
-                                      _prompt[index][0],
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenHeight(22),
-                                          fontWeight: FontWeight.w800,
-                                          fontFamily: 'nanum_square'),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24),
-                                        right: getProportionateScreenWidth(59),
-                                        top: getProportionateScreenHeight(10)),
-                                    child: Text(
-                                      _prompt[index][1],
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenHeight(12),
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'nanum_square'),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: getProportionateScreenWidth(24),
-                                        right: getProportionateScreenWidth(59),
-                                        top: getProportionateScreenHeight(12)),
-                                    child: Text(
-                                      _prompt[index][2],
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenHeight(14),
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'nanum_square'),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                      )
-                    ],
-                  ),
-                )),
+                    )
+                  ],
+                ),
+              ),
+            ),
             Positioned(
-              right: MediaQuery.of(context).size.width * 0.064,
-              top: getProportionateScreenHeight(570),
-              child: ImageButton(
-                  children: <Widget>[],
-                  height: getProportionateScreenHeight(76),
-                  width: getProportionateScreenWidth(76),
-                  pressedImage: Image.asset('assets/images/camera_press.png'),
-                  unpressedImage: Image.asset('assets/images/camera.png')),
-              // child: Image.asset('assets/images/camera.png'),
-            )
+              right: getProportionateScreenWidth(19),
+              bottom: getProportionateScreenHeight(127),
+              width: 86,
+              height: 86,
+              child: GestureDetector(
+                  onTapCancel: () {
+                    setState(() {
+                      currentCameraSvg = SvgPicture.asset(
+                          'assets/images/camera_unpressed.svg');
+                    });
+                  },
+                  onTapDown: (_) {
+                    setState(() {
+                      currentCameraSvg =
+                          SvgPicture.asset('assets/images/camera_pressed.svg');
+                    });
+                  },
+                  onTapUp: (_) {
+                    setState(() {
+                      currentCameraSvg = SvgPicture.asset(
+                          'assets/images/camera_unpressed.svg');
+                    });
+                  },
+                  onTap: () {},
+                  child: currentCameraSvg),
+            ),
           ]),
         ),
       ),
