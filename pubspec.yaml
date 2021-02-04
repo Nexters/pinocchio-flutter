@@ -37,6 +37,8 @@ dependencies:
   flutter_svg: 0.19.1
   lottie: ^0.7.0+1
   imagebutton: ^0.0.6
+  camera: ^0.7.0+2
+  permission_handler: ^5.1.0+1
 
 dev_dependencies:
   flutter_test:
