@@ -18,6 +18,8 @@ class OnboardingGuideManager {
 
   Future<bool> getIsGuide() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(ONBOARDING_FLAG);
+    return prefs.getBool(ONBOARDING_FLAG) == null
+        ? false
+        : prefs.getBool(ONBOARDING_FLAG);
   }
 }

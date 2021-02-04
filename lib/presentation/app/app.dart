@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/repository/auth_repository.dart';
+import 'package:flutter_sancle/data/repository/onboarding_repository.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_bloc.dart';
 import 'package:flutter_sancle/presentation/splash/bloc/splash_event.dart';
 import 'package:flutter_sancle/presentation/splash/splash_screen.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
             create: (context) {
               final authRepository =
                   RepositoryProvider.of<AuthRepository>(context);
-              return SplashBloc(authRepository)..add(UserTokenChecked());
+              return SplashBloc(authRepository, OnboardingRepository())
+                ..add(UserTokenChecked());
             },
             child: SplashScreen(),
           ),

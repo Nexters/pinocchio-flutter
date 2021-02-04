@@ -1,12 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_state.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   bool _isKakaoTalkInstalled = false;
+  final LoginRepository _loginRepository;
 
-  LoginBloc() : super(LoginInitial());
+  LoginBloc(this._loginRepository) : super(LoginInitial());
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -18,15 +20,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             ? await _loginWithTalk()
             : await _loginWithKakao();
         final user = await UserApi.instance.me();
-        final userId = user.id;
+        final userId = user.id.toString();
         final userNickname = user.kakaoAccount.profile.nickname;
-        final userImageUrl =
-            user.kakaoAccount.profile.profileImageUrl.toString();
-        /**
-         * TODO -1 카카오에서 가져온 사용자 정보 서버로 보내는 작업
-         * TODO -2 서버에서 받아온 토큰 정보 SharedPreferences 를 이용해 저장하기
-         * */
-        yield UserLoginSuccess();
+        yield* _requestLoginAfterSignUp("KAKAO", userNickname, userId);
       } catch (e) {
         yield UserLoginFailure();
       }
@@ -57,6 +53,28 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _issueAccessToken(code);
     } catch (e) {
       await _loginWithKakao();
+    }
+  }
+
+  Stream<LoginState> _requestLoginAfterSignUp(
+      String loginType, String nickName, String socialId) async* {
+    try {
+      yield LoginLoading();
+      final code =
+          await _loginRepository.postAuthRegister("KAKAO", nickName, socialId);
+
+      if (code == 201 || code == 409) {
+        bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
+        if (isLoginSuccess) {
+          yield UserLoginSuccess();
+        } else {
+          yield UserLoginFailure();
+        }
+      } else {
+        yield UserLoginFailure();
+      }
+    } catch (e) {
+      yield UserLoginFailure();
     }
   }
 }
