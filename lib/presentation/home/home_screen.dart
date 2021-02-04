@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_bloc.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_sancle/presentation/mypage/mypage_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() {
@@ -42,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
         listener: (context, state) {
           if (state is MypageStart) {
             Navigator.pushReplacement(context, MyPageScreen.route());
+          } else if (state is PermissionError) {
+            Fluttertoast.showToast(msg: '해당 휴대폰에서 카메라를 사용할 수 없습니다.');
+          } else if (state is PermissionIsDenied) {
+            _showPermissionDialog();
+          } else if (state is PermissionIsGranted) {
+            // TODO 카메라 화면 전환
           }
         },
         child: SafeArea(
@@ -242,7 +251,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           'assets/images/camera_unpressed.svg');
                     });
                   },
-                  onTap: () {},
+                  onTap: () {
+                    BlocProvider.of<HomeBloc>(context)
+                        .add(PermissionRequested());
+                  },
                   child: currentCameraSvg),
             ),
           ]),
@@ -282,4 +294,32 @@ class _HomeScreenState extends State<HomeScreen> {
       '산타클로즈에 라벨을 쌓아주세요 2줄가이드 라인하이트8'
     ]
   ];
+
+  _showPermissionDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text('카메라에 대한 엑세스 권한이 없어요.'),
+          content: Text('앱 설정으로 가서 엑세스 권한을 수정 할 수 있어요. 이동하시겠어요?'),
+          actions: [
+            CupertinoDialogAction(
+              child: Text('취소'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            CupertinoDialogAction(
+              child: Text('설정하기'),
+              isDefaultAction: true,
+              onPressed: () {
+                openAppSettings();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
