@@ -6,3 +6,9 @@ abstract class MyPageEvent extends Equatable {
 }
 
 class MyPageInitial extends MyPageEvent {}
+
+class MyPageSlide extends MyPageEvent {
+  int page;
+
+  MyPageSlide(this.page);
+}
