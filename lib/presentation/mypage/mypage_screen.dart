@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageState.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:touchable_opacity/touchable_opacity.dart';
 
 import 'bloc/MyPageEvent.dart';
 
@@ -30,7 +32,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   void initState() {
     super.initState();
-    for(int i = 0; i < 5; i ++){
+    for (int i = 0; i < 5; i++) {
       _currentCameraSvg[i] = new SvgPicture.asset(_category[i][0]);
     }
   }
@@ -50,11 +52,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: getProportionateScreenHeight(64)),
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                  child: SvgPicture.asset("assets/icons/back_button.svg"),
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  child: Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.only(
+                          left: getProportionateScreenWidth(30)),
+                      child: SvgPicture.asset("assets/icons/back_button.svg")),
+                  onTap: (){
+                    Navigator.pushReplacement(context, HomeScreen.route());
+                  },
                 ),
                 SizedBox(height: getProportionateScreenHeight(36)),
                 Stack(
@@ -265,20 +272,23 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     GestureDetector(
                                         onTapCancel: () {
                                           setState(() {
-                                            _currentCameraSvg[index] = SvgPicture.asset(
-                                                _category[index][0]);
+                                            _currentCameraSvg[index] =
+                                                SvgPicture.asset(
+                                                    _category[index][0]);
                                           });
                                         },
                                         onTapDown: (_) {
                                           setState(() {
-                                            _currentCameraSvg[index] = SvgPicture.asset(
-                                                _category[index][1]);
+                                            _currentCameraSvg[index] =
+                                                SvgPicture.asset(
+                                                    _category[index][1]);
                                           });
                                         },
                                         onTapUp: (_) {
                                           setState(() {
-                                            _currentCameraSvg[index] = SvgPicture.asset(
-                                                _category[index][0]);
+                                            _currentCameraSvg[index] =
+                                                SvgPicture.asset(
+                                                    _category[index][0]);
                                           });
                                         },
                                         onTap: () {},
