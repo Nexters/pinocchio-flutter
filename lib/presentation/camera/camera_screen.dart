@@ -119,7 +119,7 @@ class _CameraScreenState extends State<CameraScreen>
                           itemBuilder: (context, index) {
                             return _categoryItem(
                                 index: index,
-                                selectedPosition: state.selectedPosition,
+                                isSelected: index == state.selectedPosition,
                                 pictureCategories: state.pictureCategories);
                           },
                           itemCount: state.pictureCategories.length,
@@ -165,30 +165,29 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Widget _categoryItem(
-      {int index, int selectedPosition, List<String> pictureCategories}) {
+      {int index, bool isSelected, List<String> pictureCategories}) {
     return GestureDetector(
       onTap: () {
         BlocProvider.of<CameraBloc>(context).add(PictureCategoryClicked(index));
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
         width: 54,
         margin: EdgeInsets.only(
             left: index == 0
                 ? getProportionateScreenWidth(24)
                 : getProportionateScreenWidth(18)),
         decoration: BoxDecoration(
-            color: index == selectedPosition ? primaryColor : whiteColor,
+            color: isSelected ? primaryColor : whiteColor,
             borderRadius: BorderRadius.all(Radius.circular(50.0))),
         child: Center(
-          child: Container(
-            child: Text(
-              pictureCategories[index],
-              style: TextStyle(
-                color: blackColor,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'nanum_square',
-              ),
+          child: Text(
+            pictureCategories[index],
+            style: TextStyle(
+              color: blackColor,
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'nanum_square',
             ),
           ),
         ),
