@@ -25,6 +25,16 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
+  List<SvgPicture> _currentCameraSvg = new List(5);
+
+  @override
+  void initState() {
+    super.initState();
+    for(int i = 0; i < 5; i ++){
+      _currentCameraSvg[i] = new SvgPicture.asset(_category[i][0]);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,18 +52,20 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 SizedBox(height: getProportionateScreenHeight(64)),
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                  padding:
+                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
                   child: SvgPicture.asset("assets/icons/back_button.svg"),
                 ),
                 SizedBox(height: getProportionateScreenHeight(36)),
                 Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(right: getProportionateScreenWidth(30)),
+                      padding: EdgeInsets.only(
+                          right: getProportionateScreenWidth(30)),
                       height: getProportionateScreenHeight(104),
                       child: PageView.builder(
-                          controller:
-                              BlocProvider.of<MyPageBloc>(context).pageController,
+                          controller: BlocProvider.of<MyPageBloc>(context)
+                              .pageController,
                           itemCount: _prompt.length,
                           onPageChanged: (page) {
                             BlocProvider.of<MyPageBloc>(context)
@@ -75,7 +87,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    SizedBox(height: getProportionateScreenHeight(20.0)),
+                                    SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(20.0)),
                                     Text(
                                       _prompt[index][0],
                                       overflow: TextOverflow.ellipsis,
@@ -85,24 +99,30 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                           fontWeight: FontWeight.w800,
                                           fontFamily: 'nanum_square'),
                                     ),
-                                    SizedBox(height: getProportionateScreenHeight(8.0)),
+                                    SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(8.0)),
                                     Text(
                                       _prompt[index][1],
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenHeight(22.0),
+                                              getProportionateScreenHeight(
+                                                  22.0),
                                           fontWeight: FontWeight.w800,
                                           fontFamily: 'nanum_square'),
                                     ),
-                                    SizedBox(height: getProportionateScreenHeight(10.0)),
+                                    SizedBox(
+                                        height:
+                                            getProportionateScreenHeight(10.0)),
                                     Text(
                                       _prompt[index][2],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenHeight(12.0),
+                                              getProportionateScreenHeight(
+                                                  12.0),
                                           fontWeight: FontWeight.w400,
                                           fontFamily: 'nanum_square'),
                                     ),
@@ -113,7 +133,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           }),
                     ),
                     Container(
-                      padding: EdgeInsets.only(right: getProportionateScreenWidth(30.0)),
+                      padding: EdgeInsets.only(
+                          right: getProportionateScreenWidth(30.0)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
@@ -129,7 +150,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   height: getProportionateScreenHeight(18),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30), right: getProportionateScreenWidth(30)),
+                  padding: EdgeInsets.only(
+                      left: getProportionateScreenWidth(30),
+                      right: getProportionateScreenWidth(30)),
                   width: SizeConfig.screenWidth,
                   height: getProportionateScreenHeight(126),
                   decoration: BoxDecoration(
@@ -176,7 +199,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 TextSpan(
                                   text: '벌!',
                                   style: TextStyle(
-                                      fontSize: getProportionateScreenHeight(14),
+                                      fontSize:
+                                          getProportionateScreenHeight(14),
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'nanum_square'),
                                 )
@@ -196,7 +220,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   height: getProportionateScreenHeight(18),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30), top: getProportionateScreenHeight(30), right: getProportionateScreenWidth(30)),
+                  padding: EdgeInsets.only(
+                      left: getProportionateScreenWidth(30),
+                      top: getProportionateScreenHeight(30),
+                      right: getProportionateScreenWidth(30)),
                   width: SizeConfig.screenWidth,
                   height: getProportionateScreenHeight(286),
                   decoration: BoxDecoration(
@@ -235,18 +262,35 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               return Container(
                                 child: Column(
                                   children: [
-                                    SvgPicture.asset(
-                                      _category[index][0],
-                                      height: 60,
-                                      width: 60,
-                                    ),
+                                    GestureDetector(
+                                        onTapCancel: () {
+                                          setState(() {
+                                            _currentCameraSvg[index] = SvgPicture.asset(
+                                                _category[index][0]);
+                                          });
+                                        },
+                                        onTapDown: (_) {
+                                          setState(() {
+                                            _currentCameraSvg[index] = SvgPicture.asset(
+                                                _category[index][1]);
+                                          });
+                                        },
+                                        onTapUp: (_) {
+                                          setState(() {
+                                            _currentCameraSvg[index] = SvgPicture.asset(
+                                                _category[index][0]);
+                                          });
+                                        },
+                                        onTap: () {},
+                                        child: _currentCameraSvg[index]),
                                     SizedBox(
                                       height: 10,
                                     ),
-                                    Text(_category[index][1],
+                                    Text(_category[index][2],
                                         style: TextStyle(
                                             fontSize:
-                                                getProportionateScreenHeight(14),
+                                                getProportionateScreenHeight(
+                                                    14),
                                             fontWeight: FontWeight.w400,
                                             fontFamily: 'nanum_square'))
                                   ],
@@ -262,36 +306,36 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 SizedBox(height: getProportionateScreenHeight(18)),
                 Container(
                   height: getProportionateScreenHeight(62),
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                  padding:
+                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
                   alignment: Alignment.centerLeft,
                   child: Text('공지사항',
                       style: TextStyle(
-                          fontSize:
-                          getProportionateScreenHeight(18),
+                          fontSize: getProportionateScreenHeight(18),
                           fontWeight: FontWeight.w400,
                           fontFamily: 'nanum_square')),
                 ),
                 SizedBox(height: getProportionateScreenHeight(6)),
                 Container(
                   height: getProportionateScreenHeight(62),
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                  padding:
+                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
                   alignment: Alignment.centerLeft,
                   child: Text('자주 묻는 질문',
                       style: TextStyle(
-                          fontSize:
-                          getProportionateScreenHeight(18),
+                          fontSize: getProportionateScreenHeight(18),
                           fontWeight: FontWeight.w400,
                           fontFamily: 'nanum_square')),
                 ),
                 SizedBox(height: getProportionateScreenHeight(6)),
                 Container(
                   height: getProportionateScreenHeight(62),
-                  padding: EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                  padding:
+                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
                   alignment: Alignment.centerLeft,
                   child: Text('로그아웃',
                       style: TextStyle(
-                          fontSize:
-                          getProportionateScreenHeight(18),
+                          fontSize: getProportionateScreenHeight(18),
                           fontWeight: FontWeight.w400,
                           fontFamily: 'nanum_square')),
                 ),
@@ -337,10 +381,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
   ];
 
   List<List<String>> _category = [
-    ['assets/icons/top.svg', '상의'],
-    ['assets/icons/pants.svg', '하의'],
-    ['assets/icons/socks.svg', '양말'],
-    ['assets/icons/underwear.svg', '속옷'],
-    ['assets/icons/towel.svg', '수건'],
+    ['assets/icons/top.svg', 'assets/icons/top_press.svg', '상의'],
+    ['assets/icons/pants.svg', 'assets/icons/pants_press.svg', '하의'],
+    ['assets/icons/socks.svg', 'assets/icons/socks_press.svg', '양말'],
+    ['assets/icons/underwear.svg', 'assets/icons/underwear_press.svg', '속옷'],
+    ['assets/icons/towel.svg', 'assets/icons/towel_press.svg', '수건'],
   ];
 }

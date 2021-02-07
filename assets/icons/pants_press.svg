@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="none" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="29.5" fill="#FFC33A" stroke="#FFC33A"/>
+    <path fill="#fff" d="M30 35.902l-2.007 7.504-12.445-2.22 1.195-24.592h26.524l1.185 24.592-12.445 2.22-1.996-7.504"/>
+    <path stroke="#363636" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M30 35.902l-2.007 7.504-12.445-2.22 1.195-24.592h26.524l1.185 24.592-12.445 2.22-1.996-7.504"/>
+    <path fill="#fff" stroke="#363636" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M16.743 16.594l-.153 2.992h26.82l-.142-2.992H16.742z"/>
+    <path stroke="#363636" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M24.65 19.586v-2.992M35.34 19.586v-2.992"/>
+    <path fill="#363636" stroke="#363636" d="M30.213 18.102c0 .025-.008.042-.016.052-.007-.01-.015-.027-.015-.052 0-.026.008-.043.015-.052.008.01.016.026.016.052z"/>
+    <path stroke="#363636" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M28.651 19.586v-2.992M16.108 30.713l4.528-11.115M43.87 30.713l-4.528-11.115M29.671 30s1.985.451 2.094-1.259c.11-1.71 0-9.143 0-9.143"/>
+    <path stroke="#363636" stroke-miterlimit="10" d="M28.596 40.936l-12.982-2.47M44.397 38.466l-12.982 2.47"/>
+</svg>
