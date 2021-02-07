@@ -7,12 +7,17 @@ abstract class CameraState extends Equatable {
 
 class CameraInitial extends CameraState {}
 
-class PictureDataLoaded extends CameraState {
-  final List<String> pictureCategories = ['상의', '하의', '양말', '속옷', '수건'];
-  final int selectedPosition;
+class CameraReady extends CameraState {}
 
-  PictureDataLoaded({this.selectedPosition});
+class CameraFailure extends CameraState {}
+
+class CameraCaptureSuccess extends CameraState {
+  final String path;
+
+  CameraCaptureSuccess(this.path);
 
   @override
-  List<Object> get props => [selectedPosition];
+  List<Object> get props => [path];
 }
+
+class CameraCaptureFailure extends CameraState {}

@@ -4,24 +4,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_event.dart';
+import 'package:flutter_sancle/utils/camera_utils.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'bloc/camera_state.dart';
 
 class CameraScreen extends StatefulWidget {
-  final List<CameraDescription> cameras;
-
-  CameraScreen(this.cameras);
-
-  static Route route(List<CameraDescription> cameras) {
+  static Route route() {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<CameraBloc>(
         create: (context) {
-          return CameraBloc()..add(PictureDataRequested());
+          return CameraBloc(cameraUtils: CameraUtils())
+            ..add(CameraInitialized());
         },
-        child: CameraScreen(cameras),
+        child: CameraScreen(),
       ),
     );
   }
@@ -32,36 +31,35 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen>
     with WidgetsBindingObserver {
-  CameraController _controller;
-  SvgPicture currentCameraButtonSvg;
+  SvgPicture _currentCameraButtonSvg;
+  CameraBloc _cameraBloc;
 
   @override
   void initState() {
     super.initState();
+    _cameraBloc = BlocProvider.of<CameraBloc>(context);
     WidgetsBinding.instance.addObserver(this);
-    currentCameraButtonSvg =
+    _currentCameraButtonSvg =
         SvgPicture.asset('assets/icons/ic_camera_button_unpressed.svg');
-    onNewCameraSelected(widget.cameras[0]);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_controller == null || !_controller.value.isInitialized) {
-      return;
-    }
+    _cameraBloc = BlocProvider.of<CameraBloc>(context);
+
+    if (!_cameraBloc.isInitialized()) return;
+
     if (state == AppLifecycleState.inactive) {
-      _controller?.dispose();
+      _cameraBloc.add(CameraStopped());
     } else if (state == AppLifecycleState.resumed) {
-      if (_controller != null) {
-        onNewCameraSelected(_controller.description);
-      }
+      _cameraBloc.add(CameraInitialized());
     }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _controller?.dispose();
+    _cameraBloc.dispose();
     super.dispose();
   }
 
@@ -78,97 +76,110 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Widget _cameraView() {
-    if (_controller == null || !_controller.value.isInitialized) {
-      return Center(child: CircularProgressIndicator());
-    } else {
-      return BlocBuilder<CameraBloc, CameraState>(
-        builder: (context, state) {
-          if (state is PictureDataLoaded) {
-            return Stack(children: <Widget>[
-              CameraPreview(_controller),
-              Positioned(
-                top: getProportionateScreenHeight(48),
-                left: getProportionateScreenWidth(24),
-                child: TouchableOpacity(
-                  activeOpacity: 0.6,
-                  onTap: () {
-                    _closeScreen();
-                  },
-                  child: SvgPicture.asset(
-                    'assets/icons/ic_close_normal.svg',
-                    height: getProportionateScreenHeight(32),
-                    width: getProportionateScreenHeight(32),
-                  ),
-                ),
+    return BlocConsumer<CameraBloc, CameraState>(
+      listener: (context, state) {
+        if (state is CameraFailure) {
+          Fluttertoast.showToast(msg: '카메라를 사용할 수 없습니다. 잠시 후 다시 시도해주세요.');
+          _closeScreen();
+        } else if (state is CameraCaptureSuccess) {
+          String path = state.path;
+          // TODO 사진 결과 화면 전환
+        } else if (state is CameraCaptureFailure) {
+          Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
+        }
+      },
+      builder: (context, state) {
+        return Stack(children: <Widget>[
+          state is CameraReady
+              ? CameraPreview(_cameraBloc.getController())
+              : Center(child: CircularProgressIndicator()),
+          Positioned(
+            top: getProportionateScreenHeight(48),
+            left: getProportionateScreenWidth(24),
+            child: TouchableOpacity(
+              activeOpacity: 0.6,
+              onTap: () {
+                _closeScreen();
+              },
+              child: SvgPicture.asset(
+                'assets/icons/ic_close_normal.svg',
+                height: getProportionateScreenHeight(32),
+                width: getProportionateScreenHeight(32),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  color: Colors.white,
-                  width: double.infinity,
-                  height: 145,
-                  child: Column(
-                    children: [
-                      Divider(
-                          height: 1, color: Color(0xFFB6BCC2), thickness: 1),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        height: 24,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return _categoryItem(
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.white,
+              width: double.infinity,
+              height: 145,
+              child: Column(
+                children: [
+                  Divider(height: 1, color: Color(0xFFB6BCC2), thickness: 1),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 24,
+                    child: StreamBuilder<Object>(
+                        stream: _cameraBloc.selectedIndexStream,
+                        initialData: 0,
+                        builder: (context, snapshot) {
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return _categoryItem(
                                 index: index,
-                                isSelected: index == state.selectedPosition,
-                                pictureCategories: state.pictureCategories);
-                          },
-                          itemCount: state.pictureCategories.length,
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5),
-                        width: getProportionateScreenHeight(82),
-                        height: getProportionateScreenHeight(82),
-                        child: GestureDetector(
-                            onTapCancel: () {
-                              setState(() {
-                                currentCameraButtonSvg = SvgPicture.asset(
-                                    'assets/icons/ic_camera_button_unpressed.svg');
-                              });
+                                isSelected: index == snapshot.data,
+                                pictureCategories:
+                                    _cameraBloc.pictureCategories,
+                              );
                             },
-                            onTapDown: (_) {
-                              setState(() {
-                                currentCameraButtonSvg = SvgPicture.asset(
-                                    'assets/icons/ic_camera_button_pressed.svg');
-                              });
-                            },
-                            onTapUp: (_) {
-                              setState(() {
-                                currentCameraButtonSvg = SvgPicture.asset(
-                                    'assets/icons/ic_camera_button_unpressed.svg');
-                              });
-                            },
-                            onTap: () {},
-                            child: currentCameraButtonSvg),
-                      )
-                    ],
+                            itemCount: _cameraBloc.pictureCategories.length,
+                          );
+                        }),
                   ),
-                ),
-              )
-            ]);
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      );
-    }
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    width: getProportionateScreenHeight(82),
+                    height: getProportionateScreenHeight(82),
+                    child: GestureDetector(
+                        onTapCancel: () {
+                          setState(() {
+                            _currentCameraButtonSvg = SvgPicture.asset(
+                                'assets/icons/ic_camera_button_unpressed.svg');
+                          });
+                        },
+                        onTapDown: (_) {
+                          setState(() {
+                            _currentCameraButtonSvg = SvgPicture.asset(
+                                'assets/icons/ic_camera_button_pressed.svg');
+                          });
+                        },
+                        onTapUp: (_) {
+                          setState(() {
+                            _currentCameraButtonSvg = SvgPicture.asset(
+                                'assets/icons/ic_camera_button_unpressed.svg');
+                          });
+                        },
+                        onTap: () {
+                          _cameraBloc.add(CameraCaptured());
+                        },
+                        child: _currentCameraButtonSvg),
+                  )
+                ],
+              ),
+            ),
+          )
+        ]);
+      },
+    );
   }
 
   Widget _categoryItem(
       {int index, bool isSelected, List<String> pictureCategories}) {
     return GestureDetector(
       onTap: () {
-        BlocProvider.of<CameraBloc>(context).add(PictureCategoryClicked(index));
+        _cameraBloc.add(PictureCategoryClicked(index));
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
@@ -193,31 +204,6 @@ class _CameraScreenState extends State<CameraScreen>
         ),
       ),
     );
-  }
-
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
-    if (_controller != null) {
-      await _controller.dispose();
-    }
-    _controller = CameraController(cameraDescription, ResolutionPreset.veryHigh,
-        enableAudio: false);
-
-    _controller.addListener(() {
-      if (mounted) setState(() {});
-      if (_controller.value.hasError) {
-        _closeScreen();
-      }
-    });
-
-    try {
-      await _controller.initialize();
-    } on CameraException catch (_) {
-      _closeScreen();
-    }
-
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   void _closeScreen() {

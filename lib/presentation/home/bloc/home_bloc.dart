@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
@@ -42,17 +41,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _requestPermission() async* {
     yield StateIgnored();
     if (await Permission.camera.request().isGranted) {
-      try {
-        List<CameraDescription> cameras = await availableCameras();
-        if (cameras.isNotEmpty) {
-          yield PermissionIsGranted(cameras);
-        } else {
-          /// 휴대폰에서 카메라가 사용 불가능 한 경우
-          yield PermissionError();
-        }
-      } on CameraException {
-        yield PermissionError();
-      }
+      yield PermissionIsGranted();
     } else {
       yield PermissionIsDenied();
     }

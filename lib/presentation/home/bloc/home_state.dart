@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {
@@ -10,11 +9,7 @@ class HomeStart extends HomeState {}
 
 class MypageStart extends HomeState {}
 
-class PermissionIsGranted extends HomeState {
-  final List<CameraDescription> cameras;
-
-  PermissionIsGranted(this.cameras);
-}
+class PermissionIsGranted extends HomeState {}
 
 class PermissionIsDenied extends HomeState {}
 

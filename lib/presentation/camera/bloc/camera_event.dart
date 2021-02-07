@@ -5,13 +5,17 @@ abstract class CameraEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PictureDataRequested extends CameraEvent {}
+class CameraInitialized extends CameraEvent {}
+
+class CameraStopped extends CameraEvent {}
+
+class CameraCaptured extends CameraEvent {}
 
 class PictureCategoryClicked extends CameraEvent {
-  final int selectedPosition;
+  final int selectedIndex;
 
-  PictureCategoryClicked(this.selectedPosition);
+  PictureCategoryClicked(this.selectedIndex);
 
   @override
-  List<Object> get props => [selectedPosition];
+  List<Object> get props => [selectedIndex];
 }

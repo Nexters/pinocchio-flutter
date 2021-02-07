@@ -11,7 +11,6 @@ import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() {
@@ -46,12 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
         listener: (context, state) {
           if (state is MypageStart) {
             Navigator.pushReplacement(context, MyPageScreen.route());
-          } else if (state is PermissionError) {
-            Fluttertoast.showToast(msg: '해당 휴대폰에서 카메라를 사용할 수 없습니다.');
           } else if (state is PermissionIsDenied) {
             _showPermissionDialog();
           } else if (state is PermissionIsGranted) {
-            Navigator.push(context, CameraScreen.route(state.cameras));
+            Navigator.push(context, CameraScreen.route());
           }
         },
         child: SafeArea(
