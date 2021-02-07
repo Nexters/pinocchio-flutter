@@ -8,6 +8,8 @@ const grayDarkColor = Color(0xFFAFAFAF);
 const whiteColor = Color(0xFFFFFFFF);
 const blackColor = Color(0xFF000000);
 
+const shadowColor = Color.fromRGBO(0, 0, 0, 0.1);
+
 const sancleDarkColor = Color(0xFF0F1012);
 const sancleWhiteColor = Color(0xFFFFFFFF);
 
