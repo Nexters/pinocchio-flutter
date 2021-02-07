@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/presentation/camera/camera_screen.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_state.dart';
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is PermissionIsDenied) {
             _showPermissionDialog();
           } else if (state is PermissionIsGranted) {
-            // TODO 카메라 화면 전환
+            Navigator.push(context, CameraScreen.route(state.cameras));
           }
         },
         child: SafeArea(
