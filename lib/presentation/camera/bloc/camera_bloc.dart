@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_event.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_state.dart';
+import 'package:flutter_sancle/presentation/models/picture_category.dart';
 import 'package:flutter_sancle/utils/camera_utils.dart';
 
 class CameraBloc extends Bloc<CameraEvent, CameraState> {
@@ -25,9 +25,9 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
 
   Stream<int> get selectedIndexStream => _selectedIndexStreamController.stream;
 
-  List<String> pictureCategories = ['상의', '하의', '양말', '속옷', '수건'];
+  List<PictureCategory> pictureCategories = PictureCategory.values;
 
-  String getSelectedCategory() => pictureCategories[_selectedIndex];
+  PictureCategory getSelectedCategory() => pictureCategories[_selectedIndex];
 
   CameraController _controller;
 

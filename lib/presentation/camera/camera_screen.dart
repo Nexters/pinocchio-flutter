@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_event.dart';
+import 'package:flutter_sancle/presentation/models/picture_category.dart';
 import 'package:flutter_sancle/utils/camera_utils.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
@@ -83,7 +84,8 @@ class _CameraScreenState extends State<CameraScreen>
           _closeScreen();
         } else if (state is CameraCaptureSuccess) {
           String path = state.path;
-          // TODO 사진 결과 화면 전환
+          String category = _cameraBloc.getSelectedCategory().toShortString();
+          // TODO 사진 결과 화면으로 전환
         } else if (state is CameraCaptureFailure) {
           Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
         }
@@ -128,11 +130,8 @@ class _CameraScreenState extends State<CameraScreen>
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return _categoryItem(
-                                index: index,
-                                isSelected: index == snapshot.data,
-                                pictureCategories:
-                                    _cameraBloc.pictureCategories,
-                              );
+                                  index: index,
+                                  isSelected: index == snapshot.data);
                             },
                             itemCount: _cameraBloc.pictureCategories.length,
                           );
@@ -175,8 +174,7 @@ class _CameraScreenState extends State<CameraScreen>
     );
   }
 
-  Widget _categoryItem(
-      {int index, bool isSelected, List<String> pictureCategories}) {
+  Widget _categoryItem({int index, bool isSelected}) {
     return GestureDetector(
       onTap: () {
         _cameraBloc.add(PictureCategoryClicked(index));
@@ -193,7 +191,7 @@ class _CameraScreenState extends State<CameraScreen>
             borderRadius: BorderRadius.all(Radius.circular(50.0))),
         child: Center(
           child: Text(
-            pictureCategories[index],
+            _cameraBloc.pictureCategories[index].getUIValue(),
             style: TextStyle(
               color: blackColor,
               fontSize: 12,
