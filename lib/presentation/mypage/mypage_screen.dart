@@ -50,7 +50,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   children: [
                     Container(
                       padding: EdgeInsets.only(right: getProportionateScreenWidth(30)),
-                      height: getProportionateScreenHeight(96),
+                      height: getProportionateScreenHeight(104),
                       child: PageView.builder(
                           controller:
                               BlocProvider.of<MyPageBloc>(context).pageController,
@@ -75,34 +75,34 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    SizedBox(height: getProportionateScreenHeight(19.0)),
+                                    SizedBox(height: getProportionateScreenHeight(20.0)),
                                     Text(
                                       _prompt[index][0],
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenHeight(21),
+                                              getProportionateScreenHeight(22),
                                           fontWeight: FontWeight.w800,
                                           fontFamily: 'nanum_square'),
                                     ),
-                                    SizedBox(height: getProportionateScreenHeight(7.0)),
+                                    SizedBox(height: getProportionateScreenHeight(8.0)),
                                     Text(
                                       _prompt[index][1],
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenHeight(21.0),
+                                              getProportionateScreenHeight(22.0),
                                           fontWeight: FontWeight.w800,
                                           fontFamily: 'nanum_square'),
                                     ),
-                                    SizedBox(height: getProportionateScreenHeight(9.0)),
+                                    SizedBox(height: getProportionateScreenHeight(10.0)),
                                     Text(
                                       _prompt[index][2],
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize:
-                                              getProportionateScreenHeight(11.0),
+                                              getProportionateScreenHeight(12.0),
                                           fontWeight: FontWeight.w400,
                                           fontFamily: 'nanum_square'),
                                     ),
