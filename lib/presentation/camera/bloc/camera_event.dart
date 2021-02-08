@@ -11,6 +11,8 @@ class CameraStopped extends CameraEvent {}
 
 class CameraCaptured extends CameraEvent {}
 
+class CameraReStarted extends CameraEvent {}
+
 class PictureCategoryClicked extends CameraEvent {
   final int selectedIndex;
 

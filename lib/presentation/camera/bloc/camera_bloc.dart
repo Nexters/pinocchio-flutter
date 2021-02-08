@@ -46,6 +46,8 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
     } else if (event is PictureCategoryClicked) {
       _selectedIndex = event.selectedIndex;
       selectedIndexSink.add(_selectedIndex);
+    } else if (event is CameraReStarted) {
+      yield* _mapCameraReStartedToState();
     }
   }
 
@@ -76,6 +78,12 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       } on CameraException catch (_) {
         yield CameraCaptureFailure();
       }
+    }
+  }
+
+  Stream<CameraState> _mapCameraReStartedToState() async* {
+    if (state is CameraCaptureSuccess) {
+      yield CameraReady();
     }
   }
 

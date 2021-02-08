@@ -86,6 +86,7 @@ class _CameraScreenState extends State<CameraScreen>
           String path = state.path;
           String category = _cameraBloc.getSelectedCategory().toShortString();
           // TODO 사진 결과 화면으로 전환
+          _cameraBloc.add(CameraReStarted());
         } else if (state is CameraCaptureFailure) {
           Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
         }
@@ -98,16 +99,30 @@ class _CameraScreenState extends State<CameraScreen>
           Positioned(
             top: getProportionateScreenHeight(48),
             left: getProportionateScreenWidth(24),
-            child: TouchableOpacity(
-              activeOpacity: 0.6,
-              onTap: () {
-                _closeScreen();
-              },
-              child: SvgPicture.asset(
-                'assets/icons/ic_close_normal.svg',
-                height: getProportionateScreenHeight(32),
-                width: getProportionateScreenHeight(32),
-              ),
+            right: getProportionateScreenWidth(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  onTap: () {
+                    _closeScreen();
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/ic_close_normal.svg',
+                    height: getProportionateScreenHeight(32),
+                    width: getProportionateScreenHeight(32),
+                  ),
+                ),
+                VerticalSpacing(of: 16),
+                Align(
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    'assets/images/bg_camera_focus.svg',
+                    height: getProportionateScreenHeight(485),
+                  ),
+                ),
+              ],
             ),
           ),
           Align(
