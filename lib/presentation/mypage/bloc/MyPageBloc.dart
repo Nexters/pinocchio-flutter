@@ -19,7 +19,11 @@ class MyPageBloc extends Bloc<MyPageEvent, MyPageState> {
   @override
   Stream<MyPageState> mapEventToState(MyPageEvent event) {
     // TODO: implement mapEventToState
-    throw UnimplementedError();
+    if (event is MyPageSlide) {
+      page = event.page;
+      _pageController.jumpToPage(page);
+      _currentPageController.add(page);
+    }
   }
 
   Stream<int> get currentPage => _currentPageStream;

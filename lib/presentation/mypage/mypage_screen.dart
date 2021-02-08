@@ -139,18 +139,25 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             );
                           }),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          right: getProportionateScreenWidth(30.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          for (int i = 0; i < _prompt.length; i++)
-                            if (i == 1) ...[_circleBar(true)] else
-                              _circleBar(false),
-                        ],
-                      ),
-                    ),
+                    StreamBuilder<int>(
+                        stream: BlocProvider.of<MyPageBloc>(context).currentPage,
+                        initialData: 0,
+                        builder: (context, snapshot) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                right: getProportionateScreenWidth(30.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                for (int i = 0; i < _prompt.length; i++)
+                                  if (i == snapshot.data) ...[
+                                    _circleBar(true)
+                                  ] else
+                                    _circleBar(false),
+                              ],
+                            ),
+                          );
+                        }),
                   ],
                 ),
                 SizedBox(
