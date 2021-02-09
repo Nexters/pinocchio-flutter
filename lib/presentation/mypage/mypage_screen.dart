@@ -33,7 +33,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
   void initState() {
     super.initState();
     for (int i = 0; i < 5; i++) {
-      _currentCameraSvg[i] = new SvgPicture.asset(_category[i][0]);
+      _currentCameraSvg[i] = new SvgPicture.asset(_category[i][0],
+          height: getProportionateScreenHeight(60),
+          width: getProportionateScreenWidth(60));
     }
   }
 
@@ -59,7 +61,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       padding: EdgeInsets.only(
                           left: getProportionateScreenWidth(30)),
                       child: SvgPicture.asset("assets/icons/back_button.svg")),
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushReplacement(context, HomeScreen.route());
                   },
                 ),
@@ -140,7 +142,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           }),
                     ),
                     StreamBuilder<int>(
-                        stream: BlocProvider.of<MyPageBloc>(context).currentPage,
+                        stream:
+                            BlocProvider.of<MyPageBloc>(context).currentPage,
                         initialData: 0,
                         builder: (context, snapshot) {
                           return Container(
@@ -260,62 +263,77 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               fontWeight: FontWeight.w800,
                               fontFamily: 'nanum_square'),
                         ),
-                        // SizedBox(
-                        //   height: 20,
-                        // ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Container(
-                          height: 188,
-                          child: GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 5,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
+                            color: Colors.red,
+                            height: getProportionateScreenHeight(188),
+                            child: GridView.builder(
+                              padding: EdgeInsets.zero,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 5,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  color: Colors.green,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        color: Colors.blue,
+                                        child: GestureDetector(
+                                            onTapCancel: () {
+                                              setState(() {
+                                                _currentCameraSvg[index] =
+                                                    SvgPicture.asset(
+                                                        _category[index][0],
+                                                    height: getProportionateScreenHeight(60),
+                                                    width: getProportionateScreenWidth(60));
+                                              });
+                                            },
+                                            onTapDown: (_) {
+                                              setState(() {
+                                                _currentCameraSvg[index] =
+                                                    SvgPicture.asset(
+                                                        _category[index][1],
+                                                        height: getProportionateScreenHeight(60),
+                                                        width: getProportionateScreenWidth(60)
+                                                    );
+                                              });
+                                            },
+                                            onTapUp: (_) {
+                                              setState(() {
+                                                _currentCameraSvg[index] =
+                                                    SvgPicture.asset(
+                                                        _category[index][0],
+                                                        height: getProportionateScreenHeight(60),
+                                                        width: getProportionateScreenWidth(60)
+                                                    );
+                                              });
+                                            },
+                                            onTap: () {},
+                                            child: _currentCameraSvg[index],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(_category[index][2],
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenHeight(
+                                                      14),
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: 'nanum_square'))
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    GestureDetector(
-                                        onTapCancel: () {
-                                          setState(() {
-                                            _currentCameraSvg[index] =
-                                                SvgPicture.asset(
-                                                    _category[index][0]);
-                                          });
-                                        },
-                                        onTapDown: (_) {
-                                          setState(() {
-                                            _currentCameraSvg[index] =
-                                                SvgPicture.asset(
-                                                    _category[index][1]);
-                                          });
-                                        },
-                                        onTapUp: (_) {
-                                          setState(() {
-                                            _currentCameraSvg[index] =
-                                                SvgPicture.asset(
-                                                    _category[index][0]);
-                                          });
-                                        },
-                                        onTap: () {},
-                                        child: _currentCameraSvg[index]),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(_category[index][2],
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenHeight(
-                                                    14),
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'nanum_square'))
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )
+                            )
                       ],
                     ),
                   ),
