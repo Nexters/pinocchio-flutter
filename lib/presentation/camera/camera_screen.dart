@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_bloc.dart';
 import 'package:flutter_sancle/presentation/camera/bloc/camera_event.dart';
+import 'package:flutter_sancle/presentation/camera_result/camera_result_screen.dart';
 import 'package:flutter_sancle/presentation/models/picture_category.dart';
 import 'package:flutter_sancle/utils/camera_utils.dart';
 import 'package:flutter_sancle/utils/constants.dart';
@@ -85,6 +86,7 @@ class _CameraScreenState extends State<CameraScreen>
         } else if (state is CameraCaptureSuccess) {
           String path = state.path;
           String category = _cameraBloc.getSelectedCategory().toShortString();
+          Navigator.push(context, CameraResultScreen.route(path, category));
           // TODO 사진 결과 화면으로 전환
           _cameraBloc.add(CameraReStarted());
         } else if (state is CameraCaptureFailure) {
