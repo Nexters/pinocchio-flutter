@@ -319,7 +319,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 10,
+                                        height: getProportionateScreenHeight(10),
                                       ),
                                       Text(_category[index][2],
                                           style: TextStyle(
