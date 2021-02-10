@@ -37,6 +37,7 @@ dependencies:
   flutter_svg: 0.19.1
   lottie: ^0.7.0+1
   imagebutton: ^0.0.6
+  flutter_layout_grid: ^0.11.2
 
 dev_dependencies:
   flutter_test:
