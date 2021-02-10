@@ -15,6 +15,8 @@ const sancleWhiteColor = Color(0xFFFFFFFF);
 
 const buttonBorderDarkColor = Color(0x660F1012);
 
+const highlightColor = Color(0xFFFFC43A);
+
 const textColor = Color(0xFF000000);
 const textDisableColor = Color(0xFFDBDBDB);
 const buttonDisableColor = Color(0xFFF1EFEE);
