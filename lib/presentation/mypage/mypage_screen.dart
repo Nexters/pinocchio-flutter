@@ -70,8 +70,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(
-                          right: getProportionateScreenWidth(30)),
                       height: getProportionateScreenHeight(104),
                       child: PageView.builder(
                           controller: BlocProvider.of<MyPageBloc>(context)
@@ -138,6 +136,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(width: getProportionateScreenWidth(30))
                               ],
                             );
                           }),
