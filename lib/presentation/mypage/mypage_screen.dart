@@ -344,40 +344,55 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(18)),
-                Container(
-                  height: getProportionateScreenHeight(62),
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                  alignment: Alignment.centerLeft,
-                  child: Text('공지사항',
-                      style: TextStyle(
-                          fontSize: getProportionateScreenHeight(18),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'nanum_square')),
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  child:                 Container(
+                    height: getProportionateScreenHeight(62),
+                    padding:
+                    EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                    alignment: Alignment.centerLeft,
+                    child: Text('공지사항',
+                        style: TextStyle(
+                            fontSize: getProportionateScreenHeight(18),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'nanum_square')),
+                  ),
+                  onTap: () {
+                  },
                 ),
                 SizedBox(height: getProportionateScreenHeight(6)),
-                Container(
-                  height: getProportionateScreenHeight(62),
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                  alignment: Alignment.centerLeft,
-                  child: Text('자주 묻는 질문',
-                      style: TextStyle(
-                          fontSize: getProportionateScreenHeight(18),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'nanum_square')),
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  child: Container(
+                    height: getProportionateScreenHeight(62),
+                    padding:
+                    EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                    alignment: Alignment.centerLeft,
+                    child: Text('자주 묻는 질문',
+                        style: TextStyle(
+                            fontSize: getProportionateScreenHeight(18),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'nanum_square')),
+                  ),
+                  onTap: () {
+                  },
                 ),
                 SizedBox(height: getProportionateScreenHeight(6)),
-                Container(
-                  height: getProportionateScreenHeight(62),
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                  alignment: Alignment.centerLeft,
-                  child: Text('로그아웃',
-                      style: TextStyle(
-                          fontSize: getProportionateScreenHeight(18),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'nanum_square')),
+                TouchableOpacity(
+                  activeOpacity: 0.6,
+                  child: Container(
+                    height: getProportionateScreenHeight(62),
+                    padding:
+                    EdgeInsets.only(left: getProportionateScreenWidth(30)),
+                    alignment: Alignment.centerLeft,
+                    child: Text('로그아웃',
+                        style: TextStyle(
+                            fontSize: getProportionateScreenHeight(18),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'nanum_square')),
+                  ),
+                  onTap: () {
+                  },
                 ),
                 SizedBox(height: getProportionateScreenHeight(46)),
               ],
