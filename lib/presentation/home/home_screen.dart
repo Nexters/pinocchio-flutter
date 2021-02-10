@@ -13,14 +13,18 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
 class HomeScreen extends StatefulWidget {
+  static final routeName = '/home';
+
   static Route route() {
     return MaterialPageRoute(
-        builder: (_) => BlocProvider<HomeBloc>(
-              create: (context) {
-                return HomeBloc()..add(HomeInitial());
-              },
-              child: HomeScreen(),
-            ));
+      settings: RouteSettings(name: routeName),
+      builder: (_) => BlocProvider<HomeBloc>(
+        create: (context) {
+          return HomeBloc()..add(HomeInitial());
+        },
+        child: HomeScreen(),
+      ),
+    );
   }
 
   @override
