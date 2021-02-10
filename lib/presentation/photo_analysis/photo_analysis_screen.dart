@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/model/camera_result_response.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
 import 'package:lottie/lottie.dart';
 
 class PhotoAnalysisScreen extends StatefulWidget {
-  static Route route(String eventId) {
+  static Route route(CameraResultResponse response) {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<PhotoAnalysisBloc>(
         create: (context) {
-          return PhotoAnalysisBloc()..add(PhotoAnalysisInitialized(eventId));
+          return PhotoAnalysisBloc()..add(PhotoAnalysisInitialized(response));
         },
         child: PhotoAnalysisScreen(),
       ),

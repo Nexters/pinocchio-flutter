@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_sancle/data/model/camera_result_response.dart';
 
 abstract class PhotoAnalysisEvent extends Equatable {
   @override
@@ -6,10 +7,10 @@ abstract class PhotoAnalysisEvent extends Equatable {
 }
 
 class PhotoAnalysisInitialized extends PhotoAnalysisEvent {
-  final String eventId;
+  final CameraResultResponse cameraResultResponse;
 
-  PhotoAnalysisInitialized(this.eventId);
+  PhotoAnalysisInitialized(this.cameraResultResponse);
 
   @override
-  List<Object> get props => [eventId];
+  List<Object> get props => [cameraResultResponse];
 }

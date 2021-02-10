@@ -52,7 +52,7 @@ class _CameraResultScreenState extends State<CameraResultScreen> {
               ExceptionHandler.handleException(context, state.dioError);
             } else if (state is PhotoDataRequestSuccess) {
               Navigator.pushAndRemoveUntil(
-                  context, PhotoAnalysisScreen.route(state.response.eventId),
+                  context, PhotoAnalysisScreen.route(state.response),
                   (Route<dynamic> route) {
                 return route.settings.name == HomeScreen.routeName;
               });
