@@ -186,7 +186,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: getProportionateScreenHeight(20)),
+                          Expanded(child: Container()),
                           Text(
                             '라벨라벨라벨라님',
                             maxLines: 1,
@@ -195,7 +195,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 fontWeight: FontWeight.w800,
                                 fontFamily: 'nanum_square'),
                           ),
-                          SizedBox(height: 12),
+                          SizedBox(height: getProportionateScreenHeight(12)),
                           Text(
                             '산클 옷장에 쌓인 옷',
                             maxLines: 1,
@@ -205,7 +205,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'nanum_square'),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: getProportionateScreenHeight(8)),
                           Text.rich(TextSpan(
                               text: '12345678912345',
                               style: TextStyle(
@@ -222,6 +222,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       fontFamily: 'nanum_square'),
                                 )
                               ])),
+                          Expanded(child: Container()),
                         ],
                       ),
                       Expanded(child: Container()),
