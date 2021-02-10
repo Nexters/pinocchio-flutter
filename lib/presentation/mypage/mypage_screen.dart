@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageState.dart';
@@ -267,59 +268,65 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           height: 20,
                         ),
                         Container(
-                            color: Colors.red,
-                            height: getProportionateScreenHeight(188),
-                            child: GridView.builder(
-                              padding: EdgeInsets.zero,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 5,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                              ),
-                              itemBuilder: (BuildContext context, int index) {
+                            height: 188,
+                            child: LayoutGrid(
+                              columnSizes: [getProportionateScreenWidth(60).px, getProportionateScreenWidth(60).px, getProportionateScreenWidth(60).px, getProportionateScreenWidth(60).px],
+                              rowSizes: [getProportionateScreenHeight(86).px, getProportionateScreenHeight(86).px],
+                              columnGap: between(),
+                              rowGap: getProportionateScreenHeight(20),
+                              children:
+                                  List.generate(_category.length, (index) {
                                 return Container(
-                                  color: Colors.green,
                                   child: Column(
                                     children: [
                                       Container(
-                                        color: Colors.blue,
                                         child: GestureDetector(
-                                            onTapCancel: () {
-                                              setState(() {
-                                                _currentCameraSvg[index] =
-                                                    SvgPicture.asset(
-                                                        _category[index][0],
-                                                    height: getProportionateScreenHeight(60),
-                                                    width: getProportionateScreenWidth(60));
-                                              });
-                                            },
-                                            onTapDown: (_) {
-                                              setState(() {
-                                                _currentCameraSvg[index] =
-                                                    SvgPicture.asset(
-                                                        _category[index][1],
-                                                        height: getProportionateScreenHeight(60),
-                                                        width: getProportionateScreenWidth(60)
-                                                    );
-                                              });
-                                            },
-                                            onTapUp: (_) {
-                                              setState(() {
-                                                _currentCameraSvg[index] =
-                                                    SvgPicture.asset(
-                                                        _category[index][0],
-                                                        height: getProportionateScreenHeight(60),
-                                                        width: getProportionateScreenWidth(60)
-                                                    );
-                                              });
-                                            },
-                                            onTap: () {},
-                                            child: _currentCameraSvg[index],
+                                          onTapCancel: () {
+                                            setState(() {
+                                              _currentCameraSvg[index] =
+                                                  SvgPicture.asset(
+                                                      _category[index][0],
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              60),
+                                                      width:
+                                                          getProportionateScreenWidth(
+                                                              60));
+                                            });
+                                          },
+                                          onTapDown: (_) {
+                                            setState(() {
+                                              _currentCameraSvg[index] =
+                                                  SvgPicture.asset(
+                                                      _category[index][1],
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              60),
+                                                      width:
+                                                          getProportionateScreenWidth(
+                                                              60));
+                                            });
+                                          },
+                                          onTapUp: (_) {
+                                            setState(() {
+                                              _currentCameraSvg[index] =
+                                                  SvgPicture.asset(
+                                                      _category[index][0],
+                                                      height:
+                                                          getProportionateScreenHeight(
+                                                              60),
+                                                      width:
+                                                          getProportionateScreenWidth(
+                                                              60));
+                                            });
+                                          },
+                                          onTap: () {},
+                                          child: _currentCameraSvg[index],
                                         ),
                                       ),
                                       SizedBox(
-                                        height: getProportionateScreenHeight(10),
+                                        height:
+                                            getProportionateScreenHeight(10),
                                       ),
                                       Text(_category[index][2],
                                           style: TextStyle(
@@ -327,13 +334,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                                   getProportionateScreenHeight(
                                                       14),
                                               fontWeight: FontWeight.w400,
-                                              fontFamily: 'nanum_square'))
+                                              fontFamily: 'nanum_square')),
                                     ],
                                   ),
                                 );
-                              },
-                            ),
-                            )
+                              }),
+                            ))
                       ],
                     ),
                   ),
@@ -422,4 +428,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
     ['assets/icons/underwear.svg', 'assets/icons/underwear_press.svg', '속옷'],
     ['assets/icons/towel.svg', 'assets/icons/towel_press.svg', '수건'],
   ];
+
+  double between(){
+    double w = MediaQuery.of(context).size.width;
+    return (w - getProportionateScreenWidth(30) * 2 - getProportionateScreenWidth(60) *4)/3;
+  }
 }
