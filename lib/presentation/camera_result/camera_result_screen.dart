@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/network/exception_handler.dart';
 import 'package:flutter_sancle/data/repository/camera_result_repository.dart';
 import 'package:flutter_sancle/presentation/camera_result/bloc/camera_result_bloc.dart';
+import 'package:flutter_sancle/presentation/home/home_screen.dart';
+import 'package:flutter_sancle/presentation/photo_analysis/photo_analysis_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,7 +51,11 @@ class _CameraResultScreenState extends State<CameraResultScreen> {
             if (state is PhotoDataRequestFailure) {
               ExceptionHandler.handleException(context, state.dioError);
             } else if (state is PhotoDataRequestSuccess) {
-              // TODO 사진 분석 및 이벤트 생성 화면 으로 전환 작업
+              Navigator.pushAndRemoveUntil(
+                  context, PhotoAnalysisScreen.route(state.response.eventId),
+                  (Route<dynamic> route) {
+                return route.settings.name == HomeScreen.routeName;
+              });
             }
           },
           builder: (context, state) {
