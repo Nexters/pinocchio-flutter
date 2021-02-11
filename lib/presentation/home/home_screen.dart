@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is MypageStart) {
-            Navigator.pushReplacement(context, MyPageScreen.route());
+            Navigator.push(context, MyPageScreen.route());
           } else if (state is PermissionIsDenied) {
             _showPermissionDialog();
           } else if (state is PermissionIsGranted) {
