@@ -64,7 +64,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
         if (state is MyPageStart) {}
       },
       child: SafeArea(
-        // top: false,
         child: SingleChildScrollView(
           child: Container(
             color: buttonDisableColor,
@@ -82,195 +81,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     Navigator.pushReplacement(context, HomeScreen.route());
                   },
                 ),
-                Stack(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: getProportionateScreenHeight(128),
-                      child: PageView.builder(
-                          controller: BlocProvider.of<MyPageBloc>(context)
-                              .pageController,
-                          itemCount: _prompt.length,
-                          onPageChanged: (page) {
-                            BlocProvider.of<MyPageBloc>(context)
-                                .add(MyPageSlide(page));
-                          },
-                          itemBuilder: (context, index) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: getProportionateScreenWidth(30),
-                                ),
-                                Container(
-                                  child: Image.asset(
-                                      'assets/images/mypage_illust.png',
-                                      height: getProportionateScreenHeight(94)),
-                                ),
-                                Expanded(child: Container()),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    SizedBox(
-                                        height:
-                                            getProportionateScreenHeight(20.0)),
-                                    Container(
-                                      height: getProportionateScreenHeight(22),
-                                      child: Text(
-                                        _prompt[index][0],
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenHeight(
-                                                    22),
-                                            fontWeight: FontWeight.w800,
-                                            fontFamily: 'nanum_square'),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            getProportionateScreenHeight(8.0)),
-                                    Container(
-                                      height: getProportionateScreenHeight(22),
-                                      child: Text(
-                                        _prompt[index][1],
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenHeight(
-                                                    22.0),
-                                            fontWeight: FontWeight.w800,
-                                            fontFamily: 'nanum_square'),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            getProportionateScreenHeight(10.0)),
-                                    Container(
-                                      height:
-                                          getProportionateScreenHeight(12.0),
-                                      child: Text(
-                                        _prompt[index][2],
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize:
-                                                getProportionateScreenHeight(
-                                                    12.0),
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'nanum_square'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: getProportionateScreenWidth(30))
-                              ],
-                            );
-                          }),
-                    ),
-                    StreamBuilder<int>(
-                        stream:
-                            BlocProvider.of<MyPageBloc>(context).currentPage,
-                        initialData: 0,
-                        builder: (context, snapshot) {
-                          return Container(
-                            padding: EdgeInsets.only(
-                                right: getProportionateScreenWidth(30.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                for (int i = 0; i < _prompt.length; i++)
-                                  if (i == snapshot.data) ...[
-                                    _circleBar(true)
-                                  ] else
-                                    _circleBar(false),
-                              ],
-                            ),
-                          );
-                        }),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenHeight(30),
-                  ),
-                  width: SizeConfig.screenWidth,
-                  height: getProportionateScreenHeight(126),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                      boxShadow: [
-                        BoxShadow(
-                            color: shadowColor,
-                            offset: Offset(1, 2),
-                            blurRadius: 2)
-                      ]),
-                  child: Row(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(child: Container()),
-                          Text(
-                            '라벨라벨라벨라님',
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: getProportionateScreenHeight(20),
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'nanum_square'),
-                          ),
-                          SizedBox(height: getProportionateScreenHeight(12)),
-                          Text(
-                            '산클 옷장에 쌓인 옷',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: getProportionateScreenHeight(14),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'nanum_square'),
-                          ),
-                          SizedBox(height: getProportionateScreenHeight(8)),
-                          Row(
-                            children: [
-                              Stack(children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: getProportionateScreenHeight(10)),
-                                  color: highlightColor,
-                                  height: getProportionateScreenHeight(4),
-                                  width: _width,
-                                ),
-                                Text(
-                                  '12345678912345',
-                                  key: clothNum,
-                                  style: TextStyle(
-                                      fontSize:
-                                          getProportionateScreenHeight(14),
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'nanum_square'),
-                                ),
-                              ]),
-                              Text(
-                                '벌!',
-                                style: TextStyle(
-                                    fontSize: getProportionateScreenHeight(14),
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'nanum_square'),
-                              )
-                            ],
-                          ),
-                          Expanded(child: Container()),
-                        ],
-                      ),
-                      Expanded(child: Container()),
-                      Image.asset(
-                        'assets/images/default_profile.png',
-                        height: getProportionateScreenHeight(78),
-                        width: getProportionateScreenWidth(78),
-                      )
-                    ],
-                  ),
-                ),
+                _notice(),
+                _profile(),
                 SizedBox(
                   height: getProportionateScreenHeight(18),
                 ),
@@ -289,37 +101,38 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             offset: Offset(1, 2),
                             blurRadius: 2)
                       ]),
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          '판별한 의류',
-                          style: TextStyle(
-                              fontSize: getProportionateScreenHeight(18),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'nanum_square'),
-                        ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: List.generate(4, (index) {
-                                return _clothCategory(index);
-                              }),
-                            ),
-                            SizedBox(height: getProportionateScreenHeight(20)),
-                            Row(
-                              children: List.generate(1, (index) {
-                                return _clothCategory(index+4);
-                              }),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '판별한 의류',
+                        style: TextStyle(
+                            fontSize: getProportionateScreenHeight(18),
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'nanum_square'),
+                      ),
+                      SizedBox(
+                        height: getProportionateScreenHeight(20),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(4, (index) {
+                              return _clothCategory(index);
+                            }),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(20)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(1, (index) {
+                              return _clothCategory(index+4);
+                            }),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(18)),
@@ -390,6 +203,201 @@ class _MyPageScreenState extends State<MyPageScreen> {
       decoration: BoxDecoration(
           color: isActive ? primaryColor : textDisableColor,
           borderRadius: BorderRadius.all(Radius.circular(12))),
+    );
+  }
+
+  Widget _notice(){
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: getProportionateScreenHeight(128),
+          child: PageView.builder(
+              controller: BlocProvider.of<MyPageBloc>(context)
+                  .pageController,
+              itemCount: _prompt.length,
+              onPageChanged: (page) {
+                BlocProvider.of<MyPageBloc>(context)
+                    .add(MyPageSlide(page));
+              },
+              itemBuilder: (context, index) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: getProportionateScreenWidth(30),
+                    ),
+                    Container(
+                      child: Image.asset(
+                          'assets/images/mypage_illust.png',
+                          height: getProportionateScreenHeight(94)),
+                    ),
+                    Expanded(child: Container()),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                            height:
+                            getProportionateScreenHeight(20.0)),
+                        Container(
+                          height: getProportionateScreenHeight(22),
+                          child: Text(
+                            _prompt[index][0],
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize:
+                                getProportionateScreenHeight(
+                                    22),
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'nanum_square'),
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                            getProportionateScreenHeight(8.0)),
+                        Container(
+                          height: getProportionateScreenHeight(22),
+                          child: Text(
+                            _prompt[index][1],
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize:
+                                getProportionateScreenHeight(
+                                    22.0),
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'nanum_square'),
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                            getProportionateScreenHeight(10.0)),
+                        Container(
+                          height:
+                          getProportionateScreenHeight(12.0),
+                          child: Text(
+                            _prompt[index][2],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize:
+                                getProportionateScreenHeight(
+                                    12.0),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'nanum_square'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: getProportionateScreenWidth(30))
+                  ],
+                );
+              }),
+        ),
+        StreamBuilder<int>(
+            stream:
+            BlocProvider.of<MyPageBloc>(context).currentPage,
+            initialData: 0,
+            builder: (context, snapshot) {
+              return Container(
+                padding: EdgeInsets.only(
+                    right: getProportionateScreenWidth(30.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    for (int i = 0; i < _prompt.length; i++)
+                      if (i == snapshot.data) ...[
+                        _circleBar(true)
+                      ] else
+                        _circleBar(false),
+                  ],
+                ),
+              );
+            }),
+      ],
+    );
+  }
+
+  Widget _profile(){
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenHeight(30),
+      ),
+      width: SizeConfig.screenWidth,
+      height: getProportionateScreenHeight(126),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+                color: shadowColor,
+                offset: Offset(1, 2),
+                blurRadius: 2)
+          ]),
+      child: Row(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: Container()),
+              Text(
+                '라벨라벨라벨라님',
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'nanum_square'),
+              ),
+              SizedBox(height: getProportionateScreenHeight(12)),
+              Text(
+                '산클 옷장에 쌓인 옷',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: getProportionateScreenHeight(14),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'nanum_square'),
+              ),
+              SizedBox(height: getProportionateScreenHeight(8)),
+              Row(
+                children: [
+                  Stack(children: [
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: getProportionateScreenHeight(10)),
+                      color: highlightColor,
+                      height: getProportionateScreenHeight(4),
+                      width: _width,
+                    ),
+                    Text(
+                      '12345678912345',
+                      key: clothNum,
+                      style: TextStyle(
+                          fontSize:
+                          getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'nanum_square'),
+                    ),
+                  ]),
+                  Text(
+                    '벌!',
+                    style: TextStyle(
+                        fontSize: getProportionateScreenHeight(14),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'nanum_square'),
+                  )
+                ],
+              ),
+              Expanded(child: Container()),
+            ],
+          ),
+          Expanded(child: Container()),
+          Image.asset(
+            'assets/images/default_profile.png',
+            height: getProportionateScreenHeight(78),
+            width: getProportionateScreenWidth(78),
+          )
+        ],
+      ),
     );
   }
 
