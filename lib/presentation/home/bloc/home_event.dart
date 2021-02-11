@@ -15,4 +15,4 @@ class HomePageSlide extends HomeEvent {
 
 class HomeToMypage extends HomeEvent {}
 
-class GetNotice extends HomeEvent {}
+class PermissionRequested extends HomeEvent {}
