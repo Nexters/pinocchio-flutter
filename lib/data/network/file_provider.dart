@@ -13,11 +13,8 @@ class FileProvider {
   FileProvider._internal();
 
   Future<CameraResultResponse> postUserImage(
-      String category, File imageFile) async {
+      String category, File imageFile, String userId) async {
     try {
-      // TODO TokenResponse 에 userId 추가 후 prefs 에서 userId를 가져오는 방식으로 추후 변경
-      String userId = 'testId';
-
       final _dio = await DioClient.instance.getAuthApiClient();
       FormData formData = FormData.fromMap({
         "uploadFile": await MultipartFile.fromFile(imageFile.path,
