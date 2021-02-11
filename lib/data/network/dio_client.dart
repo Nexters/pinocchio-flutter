@@ -6,6 +6,9 @@ import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
 const BASE_URL =
     "http://ec2-3-139-60-119.us-east-2.compute.amazonaws.com:8082/";
 
+const FILE_BASE_URL =
+    "http://ec2-3-139-60-119.us-east-2.compute.amazonaws.com:8081/";
+
 class DioClient {
   Dio _dio;
 
