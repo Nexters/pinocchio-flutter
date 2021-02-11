@@ -4,7 +4,7 @@ import 'package:flutter_sancle/data/model/token_response.dart';
 import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
 
 const BASE_URL =
-    "http://ec2-3-139-60-119.us-east-2.compute.amazonaws.com:8082/";
+    "http://ec2-13-209-47-146.ap-northeast-2.compute.amazonaws.com:8082/";
 
 const FILE_BASE_URL =
     "http://ec2-3-139-60-119.us-east-2.compute.amazonaws.com:8081/";
