@@ -180,6 +180,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       width: getProportionateScreenWidth(30),
                     ),
                     Container(
+                      alignment: Alignment.center,
                       child: Image.asset(
                           'assets/images/mypage_illust.png',
                           height: getProportionateScreenHeight(94)),
@@ -190,7 +191,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       children: [
                         SizedBox(
                             height:
-                            getProportionateScreenHeight(20.0)),
+                            getProportionateScreenHeight(36.0)),
                         Text(
                           _prompt[index][0],
                           overflow: TextOverflow.ellipsis,
@@ -242,7 +243,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
             builder: (context, snapshot) {
               return Container(
                 padding: EdgeInsets.only(
-                    right: getProportionateScreenWidth(30.0)),
+                    right: getProportionateScreenWidth(30.0),
+                top: getProportionateScreenHeight(16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
