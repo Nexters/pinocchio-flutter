@@ -73,7 +73,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   activeOpacity: 0.6,
                   child: Container(
                       height: getProportionateScreenHeight(56),
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(
                           left: getProportionateScreenWidth(30)),
                       child: SvgPicture.asset("assets/icons/back_button.svg")),
@@ -86,55 +86,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 SizedBox(
                   height: getProportionateScreenHeight(18),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: getProportionateScreenHeight(30),
-                    horizontal: getProportionateScreenWidth(30)
-                  ),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.0),
-                      boxShadow: [
-                        BoxShadow(
-                            color: shadowColor,
-                            offset: Offset(1, 2),
-                            blurRadius: 2)
-                      ]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '판별한 의류',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(18),
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'nanum_square'),
-                      ),
-                      SizedBox(
-                        height: getProportionateScreenHeight(20),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(4, (index) {
-                              return _clothCategory(index);
-                            }),
-                          ),
-                          SizedBox(height: getProportionateScreenHeight(20)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(1, (index) {
-                              return _clothCategory(index+4);
-                            }),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+                _cloth(),
                 SizedBox(height: getProportionateScreenHeight(18)),
                 TouchableOpacity(
                   activeOpacity: 0.6,
@@ -443,6 +395,58 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   fontSize: getProportionateScreenHeight(14),
                   fontWeight: FontWeight.w400,
                   fontFamily: 'nanum_square')),
+        ],
+      ),
+    );
+  }
+
+  Widget _cloth(){
+    return Container(
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(30),
+          horizontal: getProportionateScreenWidth(30)
+      ),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+                color: shadowColor,
+                offset: Offset(1, 2),
+                blurRadius: 2)
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '판별한 의류',
+            style: TextStyle(
+                fontSize: getProportionateScreenHeight(18),
+                fontWeight: FontWeight.w800,
+                fontFamily: 'nanum_square'),
+          ),
+          SizedBox(
+            height: getProportionateScreenHeight(20),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(4, (index) {
+                  return _clothCategory(index);
+                }),
+              ),
+              SizedBox(height: getProportionateScreenHeight(20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(1, (index) {
+                  return _clothCategory(index+4);
+                }),
+              ),
+            ],
+          )
         ],
       ),
     );
