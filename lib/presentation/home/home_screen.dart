@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _initNotice();
     currentCameraSvg = SvgPicture.asset('assets/images/camera_unpressed.svg');
   }
 
@@ -263,6 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
           color: isActive ? primaryColor : textDisableColor,
           borderRadius: BorderRadius.all(Radius.circular(12))),
     );
+  }
+
+  void _initNotice(){
+    BlocProvider.of<HomeBloc>(context).add(GetNotice());
   }
 
   List<List<String>> _prompt = [

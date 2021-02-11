@@ -14,3 +14,5 @@ class HomePageSlide extends HomeEvent {
 }
 
 class HomeToMypage extends HomeEvent {}
+
+class GetNotice extends HomeEvent {}
