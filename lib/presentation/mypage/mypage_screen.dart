@@ -191,52 +191,42 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         SizedBox(
                             height:
                             getProportionateScreenHeight(20.0)),
-                        Container(
-                          height: getProportionateScreenHeight(22),
-                          child: Text(
-                            _prompt[index][0],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize:
-                                getProportionateScreenHeight(
-                                    22),
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'nanum_square'),
-                          ),
+                        Text(
+                          _prompt[index][0],
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize:
+                              getProportionateScreenHeight(
+                                  22),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'nanum_square'),
                         ),
                         SizedBox(
                             height:
                             getProportionateScreenHeight(8.0)),
-                        Container(
-                          height: getProportionateScreenHeight(22),
-                          child: Text(
-                            _prompt[index][1],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize:
-                                getProportionateScreenHeight(
-                                    22.0),
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'nanum_square'),
-                          ),
+                        Text(
+                          _prompt[index][1],
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize:
+                              getProportionateScreenHeight(
+                                  22.0),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'nanum_square'),
                         ),
                         SizedBox(
                             height:
                             getProportionateScreenHeight(10.0)),
-                        Container(
-                          height:
-                          getProportionateScreenHeight(12.0),
-                          child: Text(
-                            _prompt[index][2],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize:
-                                getProportionateScreenHeight(
-                                    12.0),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'nanum_square'),
-                          ),
+                        Text(
+                          _prompt[index][2],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize:
+                              getProportionateScreenHeight(
+                                  12.0),
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'nanum_square'),
                         ),
                       ],
                     ),
