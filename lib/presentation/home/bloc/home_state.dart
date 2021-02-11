@@ -16,3 +16,5 @@ class PermissionIsDenied extends HomeState {}
 class PermissionError extends HomeState {}
 
 class StateIgnored extends HomeState {}
+
+class GetNoti extends HomeState {}

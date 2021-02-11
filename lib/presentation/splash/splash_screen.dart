@@ -20,7 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
       body: BlocListener<SplashBloc, SplashState>(
         listener: (context, state) {
           if (state is UserTokenCheckedSuccess) {
-            Navigator.pushReplacement(context, HomeScreen.route());
+            BlocProvider.of<SplashBloc>(context).notiInfo.listen((event) {
+              Navigator.pushReplacement(context, HomeScreen.route(event));
+            });
           } else if (state is UserTokenCheckedFailure) {
             if (state.isAlreadyShownGuide) {
               Navigator.pushReplacement(context, LoginScreen.route());

@@ -78,7 +78,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           left: getProportionateScreenWidth(30)),
                       child: SvgPicture.asset("assets/icons/back_button.svg")),
                   onTap: () {
-                    Navigator.pushReplacement(context, HomeScreen.route());
+                    Navigator.pop(context);
                   },
                 ),
                 _notice(),
