@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageState.dart';
@@ -59,6 +58,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: buttonDisableColor,
         body: BlocListener<MyPageBloc, MyPageState>(
       listener: (context, state) {
         if (state is MyPageStart) {}
