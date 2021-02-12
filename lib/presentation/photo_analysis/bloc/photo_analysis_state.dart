@@ -6,3 +6,14 @@ abstract class PhotoAnalysisState extends Equatable {
 }
 
 class PhotoAnalysisInitial extends PhotoAnalysisState {}
+
+class PhotoAnalysisSuccess extends PhotoAnalysisState {}
+
+class PhotoAnalysisFailure extends PhotoAnalysisState {
+  final Exception exception;
+
+  PhotoAnalysisFailure(this.exception);
+
+  @override
+  List<Object> get props => [exception];
+}
