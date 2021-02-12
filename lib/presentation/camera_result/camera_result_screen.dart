@@ -15,6 +15,7 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 
 import 'bloc/camera_result_event.dart';
 import 'bloc/camera_result_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CameraResultScreen extends StatefulWidget {
   final String path;
@@ -49,7 +50,14 @@ class _CameraResultScreenState extends State<CameraResultScreen> {
         child: BlocConsumer<CameraResultBloc, CameraResultState>(
           listener: (context, state) {
             if (state is PhotoDataRequestFailure) {
-              ExceptionHandler.handleException(context, state.dioError);
+              if (state.dioError.response?.statusCode != 401) {
+                Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
+                Navigator.popUntil(context,
+                    (route) => route.settings.name == HomeScreen.routeName);
+                return;
+              }
+              ExceptionHandler.handleException(context, state.dioError,
+                  showsErrorMsg: false);
             } else if (state is PhotoDataRequestSuccess) {
               Navigator.pushAndRemoveUntil(
                   context, PhotoAnalysisScreen.route(state.response),
