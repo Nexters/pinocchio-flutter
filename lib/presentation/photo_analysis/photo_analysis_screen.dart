@@ -12,14 +12,20 @@ import 'package:lottie/lottie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class PhotoAnalysisScreen extends StatefulWidget {
-  static Route route(CameraResultResponse response) {
+  final String imagePath;
+
+  const PhotoAnalysisScreen({Key key, this.imagePath}) : super(key: key);
+
+  static Route route(CameraResultResponse response, String imagePath) {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<PhotoAnalysisBloc>(
         create: (context) {
           return PhotoAnalysisBloc(PhotoAnalysisRepository())
             ..add(PhotoAnalysisInitialized(response));
         },
-        child: PhotoAnalysisScreen(),
+        child: PhotoAnalysisScreen(
+          imagePath: imagePath,
+        ),
       ),
     );
   }

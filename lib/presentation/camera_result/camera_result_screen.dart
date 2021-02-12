@@ -59,8 +59,8 @@ class _CameraResultScreenState extends State<CameraResultScreen> {
               ExceptionHandler.handleException(context, state.dioError,
                   showsErrorMsg: false);
             } else if (state is PhotoDataRequestSuccess) {
-              Navigator.pushAndRemoveUntil(
-                  context, PhotoAnalysisScreen.route(state.response),
+              Navigator.pushAndRemoveUntil(context,
+                  PhotoAnalysisScreen.route(state.response, widget.path),
                   (Route<dynamic> route) {
                 return route.settings.name == HomeScreen.routeName;
               });
