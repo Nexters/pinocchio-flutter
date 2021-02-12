@@ -23,26 +23,23 @@ class PhotoAnalysisBloc extends Bloc<PhotoAnalysisEvent, PhotoAnalysisState> {
       PhotoAnalysisInitialized event) async* {
     String status;
     bool toContinue = true;
-    await Future.doWhile(() async {
-      status =
-          await _repository.getCaptureEvent(event.cameraResultResponse.eventId);
-      if (status == PhotoAnalysisStatus.DONE.toShortString()) {
-        return false;
-      } else {
-        await Future.delayed(Duration(seconds: 3));
-        return toContinue;
-      }
-    }).timeout(Duration(minutes: 5), onTimeout: () {
-      toContinue = false;
-      throw TimeoutException('Timeout');
-    }).catchError((e) async* {
-      yield PhotoAnalysisFailure(e);
-    });
-
-    if (status == PhotoAnalysisStatus.DONE.toShortString()) {
+    try {
+      await Future.doWhile(() async {
+        status = await _repository
+            .getCaptureEvent(event.cameraResultResponse.eventId);
+        if (status == PhotoAnalysisStatus.DONE.toShortString()) {
+          return false;
+        } else {
+          await Future.delayed(Duration(seconds: 3));
+          return toContinue;
+        }
+      }).timeout(Duration(minutes: 5), onTimeout: () {
+        toContinue = false;
+        throw TimeoutException('캡쳐 이벤트 조회 API 타임아웃');
+      });
       yield PhotoAnalysisSuccess();
-    } else {
-      yield PhotoAnalysisFailure(Exception('Status is not done'));
+    } catch (e) {
+      yield PhotoAnalysisFailure(e);
     }
   }
 }
