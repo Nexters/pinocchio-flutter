@@ -73,6 +73,7 @@ class DioClient {
               _dio.interceptors.errorLock.unlock();
             }
           }
+          _dio.interceptors.errorLock.unlock();
           return error;
         },
       ),
