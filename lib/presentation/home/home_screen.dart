@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/home_response.dart';
 import 'package:flutter_sancle/data/repository/home_repository.dart';
+import 'package:flutter_sancle/data/repository/mypage_repository.dart';
 import 'package:flutter_sancle/presentation/camera/camera_screen.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter_sancle/presentation/home/bloc/home_event.dart';
@@ -25,7 +26,7 @@ class HomeScreen extends StatefulWidget {
       settings: RouteSettings(name: routeName),
       builder: (_) => BlocProvider<HomeBloc>(
         create: (context) {
-          return HomeBloc(HomeRepository())..add(HomeInitial());
+          return HomeBloc(HomeRepository(), MyPageRepository())..add(HomeInitial());
         },
         child: HomeScreen(noti: event),
       ),
@@ -55,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is MypageStart) {
-              Navigator.push(context, MyPageScreen.route());
+              BlocProvider.of<HomeBloc>(context).clothInfo.listen((event) {
+                Navigator.push(context, MyPageScreen.route(event, widget.noti));
+              });
             } else if (state is PermissionIsDenied) {
               _showPermissionDialog();
             } else if (state is PermissionIsGranted) {

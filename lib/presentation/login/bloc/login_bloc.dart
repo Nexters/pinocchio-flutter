@@ -23,10 +23,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    HomeResponse _homeInfo = new HomeResponse();
-    _homeInfo = await _homeRepository.getHomeInfo();
-    _notiController.add(_homeInfo);
-
     if (event is KakaoTalkInstalled) {
       _isKakaoTalkInstalled = await isKakaoTalkInstalled();
     } else if (event is KakaoTalkLoginRequested) {
@@ -81,6 +77,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (code == 201 || code == 409) {
         bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
         if (isLoginSuccess) {
+          HomeResponse _homeInfo = new HomeResponse();
+          _homeInfo = await _homeRepository.getHomeInfo();
+          _notiController.add(_homeInfo);
           yield UserLoginSuccess();
         } else {
           yield UserLoginFailure();

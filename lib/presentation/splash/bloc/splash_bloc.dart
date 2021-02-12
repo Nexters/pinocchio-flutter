@@ -24,10 +24,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   @override
   Stream<SplashState> mapEventToState(SplashEvent event) async* {
     if (event is UserTokenChecked) {
-      HomeResponse _homeInfo = new HomeResponse();
-      _homeInfo = await _homeRepository.getHomeInfo();
-      _notiController.add(_homeInfo);
-
       final tokenResponse = await _authRepository.getUserToken();
       await Future.delayed(Duration(seconds: 2));
       if (tokenResponse == null ||
@@ -36,6 +32,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         bool isAlreadyShownGuide = await _onboardingRepository.getIsGuide();
         yield UserTokenCheckedFailure(isAlreadyShownGuide);
       } else {
+        HomeResponse _homeInfo = new HomeResponse();
+        _homeInfo = await _homeRepository.getHomeInfo();
+        _notiController.add(_homeInfo);
         yield UserTokenCheckedSuccess();
       }
     }

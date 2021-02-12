@@ -3,6 +3,6 @@ import 'package:flutter_sancle/data/network/home_provider.dart';
 
 class HomeRepository {
   Future<HomeResponse> getHomeInfo() async {
-    return HomeProvider.instance.getHomeInfo();
+    return await HomeProvider.instance.getHomeInfo();
   }
 }

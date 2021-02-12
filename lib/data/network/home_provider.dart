@@ -16,9 +16,6 @@ class HomeProvider {
       Response response = await _dio.get(BASE_URL + '/view/main');
       return HomeResponse.fromJson(response.data);
     } on DioError catch (e){
-      if(e.response?.statusCode == 401){
-        print('401');
-      }
       throw e;
     }
   }

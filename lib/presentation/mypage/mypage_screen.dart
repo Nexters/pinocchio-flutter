@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/model/home_response.dart';
+import 'package:flutter_sancle/data/model/mypage_response.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageState.dart';
@@ -13,13 +15,18 @@ import 'package:touchable_opacity/touchable_opacity.dart';
 import 'bloc/MyPageEvent.dart';
 
 class MyPageScreen extends StatefulWidget {
-  static Route route() {
+  final MyPageResponse clothInfo;
+  final HomeResponse profile;
+
+  const MyPageScreen({this.clothInfo, this.profile}) : super();
+
+  static Route route(MyPageResponse event, HomeResponse noti) {
     return MaterialPageRoute(
         builder: (_) => BlocProvider<MyPageBloc>(
               create: (context) {
                 return MyPageBloc()..add(MyPageInitial());
               },
-              child: MyPageScreen(),
+              child: MyPageScreen(clothInfo: event, profile: noti),
             ));
   }
 
@@ -186,50 +193,55 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           height: getProportionateScreenHeight(94)),
                     ),
                     Expanded(child: Container()),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                            height:
-                            getProportionateScreenHeight(36.0)),
-                        Text(
-                          _prompt[index][0],
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize:
-                              getProportionateScreenHeight(
-                                  22),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'nanum_square'),
-                        ),
-                        SizedBox(
-                            height:
-                            getProportionateScreenHeight(8.0)),
-                        Text(
-                          _prompt[index][1],
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize:
-                              getProportionateScreenHeight(
-                                  22.0),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'nanum_square'),
-                        ),
-                        SizedBox(
-                            height:
-                            getProportionateScreenHeight(10.0)),
-                        Text(
-                          _prompt[index][2],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize:
-                              getProportionateScreenHeight(
-                                  12.0),
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'nanum_square'),
-                        ),
-                      ],
+                    Container(
+                      width: getProportionateScreenWidth(220),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                              height:
+                              getProportionateScreenHeight(36.0)),
+                          Text(
+                            widget.clothInfo.noticeViewList[index].title == null ? '' : widget.clothInfo.noticeViewList[index].title,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize:
+                                getProportionateScreenHeight(
+                                    22),
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'nanum_square'),
+                          ),
+                          // SizedBox(
+                          //     height:
+                          //     getProportionateScreenHeight(8.0)),
+                          // Text(
+                          //   widget.clothInfo.noticeViewList[index].description == null ? '' : widget.clothInfo.noticeViewList[index].description,
+                          //   overflow: TextOverflow.ellipsis,
+                          //   style: TextStyle(
+                          //       fontSize:
+                          //       getProportionateScreenHeight(
+                          //           22.0),
+                          //       fontWeight: FontWeight.w800,
+                          //       fontFamily: 'nanum_square'),
+                          // ),
+                          SizedBox(
+                              height:
+                              getProportionateScreenHeight(10.0)),
+                          Text(
+                            widget.clothInfo.noticeViewList[index].content == null ? '' : widget.clothInfo.noticeViewList[index].content,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize:
+                                getProportionateScreenHeight(
+                                    12.0),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'nanum_square'),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(width: getProportionateScreenWidth(30))
                   ],
@@ -248,7 +260,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    for (int i = 0; i < _prompt.length; i++)
+                    for (int i = 0; i < widget.clothInfo.noticeViewList.length; i++)
                       if (i == snapshot.data) ...[
                         _circleBar(true)
                       ] else
@@ -284,7 +296,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             children: [
               Expanded(child: Container()),
               Text(
-                '라벨라벨라벨라님',
+                '${widget.profile.nickName}님',
                 maxLines: 1,
                 style: TextStyle(
                     fontSize: getProportionateScreenHeight(20),
@@ -313,7 +325,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       width: _width,
                     ),
                     Text(
-                      '12345678912345',
+                      '${widget.clothInfo.myLabelCount}',
                       key: clothNum,
                       style: TextStyle(
                           fontSize:
