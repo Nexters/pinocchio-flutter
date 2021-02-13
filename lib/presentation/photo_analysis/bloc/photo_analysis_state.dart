@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_sancle/data/model/photo_analysis_inspection_response.dart';
+import 'package:flutter_sancle/data/model/capture_event_response.dart';
 
 abstract class PhotoAnalysisState extends Equatable {
   @override
@@ -9,7 +9,7 @@ abstract class PhotoAnalysisState extends Equatable {
 class PhotoAnalysisInitial extends PhotoAnalysisState {}
 
 class PhotoAnalysisSuccess extends PhotoAnalysisState {
-  final PhotoAnalysisInspectionResponse response;
+  final CaptureEventResponse response;
 
   PhotoAnalysisSuccess(this.response);
 

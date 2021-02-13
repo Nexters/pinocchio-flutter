@@ -3,7 +3,7 @@
 /// status : "DONE"
 /// result : "{\"ingredientList\":[{\"name\":\"string\",\"percentage\":0}],\"waterType\":\"FORBIDDEN_BLOWER_JP\",\"bleachType\":\"ALL_JP\",\"ironingType\":\"FORBIDDEN_JP\",\"dryType\":\"DRY_BLOWER_FORBIDDEN_KR\",\"dryCleaning\":\"DRY_CLEANING_FORBIDDEN_JP\",\"clothesColor\":\"BEIGE\"}"
 
-class PhotoAnalysisInspectionResponse {
+class CaptureEventResponse {
   String _eventId;
   String _imageId;
   String _status;
@@ -14,7 +14,7 @@ class PhotoAnalysisInspectionResponse {
   String get status => _status;
   String get result => _result;
 
-  PhotoAnalysisInspectionResponse(
+  CaptureEventResponse(
       {String eventId, String imageId, String status, String result}) {
     _eventId = eventId;
     _imageId = imageId;
@@ -22,7 +22,7 @@ class PhotoAnalysisInspectionResponse {
     _result = result;
   }
 
-  PhotoAnalysisInspectionResponse.fromJson(dynamic json) {
+  CaptureEventResponse.fromJson(dynamic json) {
     _eventId = json["eventId"];
     _imageId = json["imageId"];
     _status = json["status"];

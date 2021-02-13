@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_sancle/data/model/photo_analysis_inspection_response.dart';
+import 'package:flutter_sancle/data/model/capture_event_response.dart';
 import 'package:flutter_sancle/data/repository/photo_analysis_repository.dart';
 import 'package:flutter_sancle/presentation/models/photo_analysis_status.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
@@ -22,7 +22,7 @@ class PhotoAnalysisBloc extends Bloc<PhotoAnalysisEvent, PhotoAnalysisState> {
 
   Stream<PhotoAnalysisState> _mapPhotoAnalysisInitializedToState(
       PhotoAnalysisInitialized event) async* {
-    PhotoAnalysisInspectionResponse response;
+    CaptureEventResponse response;
     bool toContinue = true;
     try {
       await Future.doWhile(() async {
