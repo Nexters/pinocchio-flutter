@@ -8,6 +8,7 @@ import 'package:flutter_sancle/data/repository/photo_analysis_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
+import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/photo_analysis_inspection_result_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -41,7 +42,10 @@ class _PhotoAnalysisScreenState extends State<PhotoAnalysisScreen> {
     return BlocListener<PhotoAnalysisBloc, PhotoAnalysisState>(
       listener: (context, state) {
         if (state is PhotoAnalysisSuccess) {
-          // TODO 결과 요약 페이지로 전환
+          Navigator.pushReplacement(
+              context,
+              PhotoAnalysisInspectionResultScreen.route(
+                  state.response, widget.imagePath));
         } else if (state is PhotoAnalysisFailure) {
           if (state.exception is DioError) {
             final dioError = state.exception as DioError;
