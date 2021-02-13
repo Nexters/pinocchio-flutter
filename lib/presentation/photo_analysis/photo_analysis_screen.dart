@@ -8,6 +8,7 @@ import 'package:flutter_sancle/data/repository/photo_analysis_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
+import 'package:flutter_sancle/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -47,11 +48,11 @@ class _PhotoAnalysisScreenState extends State<PhotoAnalysisScreen> {
             if (dioError.response?.statusCode == 401) {
               ExceptionHandler.handleException(context, dioError);
             } else {
-              Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
+              Fluttertoast.showToast(msg: DEFAULT_ERROR_MSG);
               _closeScreen();
             }
           } else {
-            Fluttertoast.showToast(msg: '잠시 후 다시 시도해주세요.');
+            Fluttertoast.showToast(msg: DEFAULT_ERROR_MSG);
             _closeScreen();
           }
         }
