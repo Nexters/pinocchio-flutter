@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/capture_event_result_response.dart';
+import 'package:flutter_sancle/data/model/enum/clothes_color_type.dart';
 
 import 'photo_analysis_inspection_result_event.dart';
 import 'photo_analysis_inspection_result_state.dart';
@@ -10,6 +11,8 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
     PhotoAnalysisInspectionResultEvent, PhotoAnalysisInspectionResultState> {
   PhotoAnalysisInspectionResultBloc()
       : super(PhotoAnalysisInspectionResultInitial());
+
+  List<ClothesColorType> closeColorTypes = ClothesColorType.values;
 
   @override
   Stream<PhotoAnalysisInspectionResultState> mapEventToState(
