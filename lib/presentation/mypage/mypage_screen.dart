@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/home_response.dart';
 import 'package:flutter_sancle/data/model/mypage_response.dart';
+import 'package:flutter_sancle/presentation/category/category_screen.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageBloc.dart';
 import 'package:flutter_sancle/presentation/mypage/bloc/MyPageState.dart';
@@ -387,7 +388,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       width: getProportionateScreenWidth(60));
                 });
               },
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, CategoryScreen.route());
+              },
               child: _currentCameraSvg[index],
             ),
           ),
