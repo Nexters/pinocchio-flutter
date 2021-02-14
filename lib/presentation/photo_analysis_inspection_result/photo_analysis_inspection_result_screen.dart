@@ -51,6 +51,7 @@ class PhotoAnalysisInspectionResultScreen extends StatefulWidget {
 class _PhotoAnalysisInspectionResultScreenState
     extends State<PhotoAnalysisInspectionResultScreen> {
   PhotoAnalysisInspectionResultBloc _bloc;
+  CaptureEventResultResponse _response;
 
   @override
   void initState() {
@@ -75,9 +76,10 @@ class _PhotoAnalysisInspectionResultScreenState
         child: BlocConsumer<PhotoAnalysisInspectionResultBloc,
             PhotoAnalysisInspectionResultState>(
           builder: (context, state) {
-            return state is DataConversionFromSuccess
-                ? _buildBody(state.response)
-                : _buildLoading();
+            if (state is DataConversionFromSuccess) {
+              _response = state.response;
+            }
+            return _response != null ? _buildBody(_response) : _buildLoading();
           },
           listener: (context, state) {
             if (state is DataConversionFromFailure) {
