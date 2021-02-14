@@ -1,15 +1,14 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/capture_event_response.dart';
-import 'package:flutter_sancle/data/repository/photo_analysis_repository.dart';
+import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/models/photo_analysis_status.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
 
 class PhotoAnalysisBloc extends Bloc<PhotoAnalysisEvent, PhotoAnalysisState> {
-  final PhotoAnalysisRepository _repository;
+  final CaptureEventRepository _repository;
 
   PhotoAnalysisBloc(this._repository) : super(PhotoAnalysisInitial());
 

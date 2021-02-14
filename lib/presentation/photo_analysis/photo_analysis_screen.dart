@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/camera_result_response.dart';
 import 'package:flutter_sancle/data/network/exception_handler.dart';
-import 'package:flutter_sancle/data/repository/photo_analysis_repository.dart';
+import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_event.dart';
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
@@ -22,7 +22,7 @@ class PhotoAnalysisScreen extends StatefulWidget {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<PhotoAnalysisBloc>(
         create: (context) {
-          return PhotoAnalysisBloc(PhotoAnalysisRepository())
+          return PhotoAnalysisBloc(CaptureEventRepository())
             ..add(PhotoAnalysisInitialized(response));
         },
         child: PhotoAnalysisScreen(
