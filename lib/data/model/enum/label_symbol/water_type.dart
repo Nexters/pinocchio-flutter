@@ -16,6 +16,12 @@ enum WaterWashingType {
   WASHER_90_KR
 }
 
+WaterWashingType getWaterWashingTypeFromString(String value) {
+  value = 'WaterWashingType.$value';
+  return WaterWashingType.values
+      .firstWhere((element) => element.toString() == value, orElse: () => null);
+}
+
 extension ParseToString on WaterWashingType {
   String toShortString() {
     return this.toString().split('.').last;

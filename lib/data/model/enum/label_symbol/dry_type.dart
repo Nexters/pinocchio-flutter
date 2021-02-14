@@ -18,6 +18,12 @@ enum DryType {
   DRY_MACHINE_FORBIDDEN_KR
 }
 
+DryType getDryTypeFromString(String value) {
+  value = 'DryType.$value';
+  return DryType.values
+      .firstWhere((element) => element.toString() == value, orElse: () => null);
+}
+
 extension ParseToString on DryType {
   String toShortString() {
     return this.toString().split('.').last;

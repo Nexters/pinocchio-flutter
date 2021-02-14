@@ -10,6 +10,12 @@ enum DryCleaningType {
   DRY_CLEANING_SELF_FORBIDDEN_KR
 }
 
+DryCleaningType getDryCleaningTypeFromString(String value) {
+  value = 'DryCleaningType.$value';
+  return DryCleaningType.values
+      .firstWhere((element) => element.toString() == value, orElse: () => null);
+}
+
 extension ParseToString on DryCleaningType {
   String toShortString() {
     return this.toString().split('.').last;

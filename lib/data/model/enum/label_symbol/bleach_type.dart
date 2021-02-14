@@ -14,6 +14,12 @@ enum BleachType {
   CL_BLEACH_KR
 }
 
+BleachType getBleachTypeFromString(String value) {
+  value = 'BleachType.$value';
+  return BleachType.values
+      .firstWhere((element) => element.toString() == value, orElse: () => null);
+}
+
 extension ParseToString on BleachType {
   String toShortString() {
     return this.toString().split('.').last;

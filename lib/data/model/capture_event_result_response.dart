@@ -1,9 +1,9 @@
-/// ingredientList : [{"name":"string","percentage":0}]
-/// waterType : "FORBIDDEN_BLOWER_JP"
-/// bleachType : "ALL_JP"
-/// ironingType : "FORBIDDEN_JP"
-/// dryType : "DRY_BLOWER_FORBIDDEN_KR"
-/// dryCleaning : "DRY_CLEANING_FORBIDDEN_JP"
+/// ingredientList : [{"name":"아크릴","percentage":35}, {"name":"폴리에스테르","percentage":25}, {"name":"캐시미어","percentage":20}, {"name":"면","percentage":10}, {"name":"실크","percentage":10}]
+/// waterType : "WASHER_ABOUT_40_KR"
+/// bleachType : "ALL_KR"
+/// ironingType : "IRONING_140_160_KR"
+/// dryType : "DRY_SUNNY_HANGER_KR"
+/// dryCleaning : "DRY_CLEANING_OIL_KR"
 /// clothesColor : "BEIGE"
 
 class CaptureEventResultResponse {

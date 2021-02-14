@@ -16,6 +16,12 @@ enum IroningType {
   IRONING_180_210_FABRIC_KR,
 }
 
+IroningType getIroningTypeFromString(String value) {
+  value = 'IroningType.$value';
+  return IroningType.values
+      .firstWhere((element) => element.toString() == value, orElse: () => null);
+}
+
 extension ParseToString on IroningType {
   String toShortString() {
     return this.toString().split('.').last;
