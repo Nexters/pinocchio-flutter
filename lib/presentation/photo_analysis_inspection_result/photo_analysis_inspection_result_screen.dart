@@ -13,6 +13,7 @@ import 'package:flutter_sancle/data/model/enum/label_symbol/ironing_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/water_type.dart';
 import 'package:flutter_sancle/data/network/exception_handler.dart';
 import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
+import 'package:flutter_sancle/presentation/photo_analysis_final_result/photo_analysis_final_result_screen.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_state.dart';
 import 'package:flutter_sancle/utils/constants.dart';
@@ -89,7 +90,10 @@ class _PhotoAnalysisInspectionResultScreenState
               Fluttertoast.showToast(msg: '레포트 보내기 성공');
               _closeScreen();
             } else if (state is EventStatusDoneSuccess) {
-              // TODO 최종 결과 화면 전환
+              Navigator.pushReplacement(
+                  context,
+                  PhotoAnalysisFinalResultScreen.route(
+                      state.eventId, widget.imagePath));
             } else if (state is NetworkError) {
               ExceptionHandler.handleException(context, state.dioError);
             }

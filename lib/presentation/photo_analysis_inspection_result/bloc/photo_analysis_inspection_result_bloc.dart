@@ -88,7 +88,7 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
       _eventUpdateRequest.status = PhotoAnalysisStatus.DONE.toShortString();
       final statusCode = await _repository.putCaptureEvent(
           _eventId, tokenResponse.userId, _eventUpdateRequest);
-      yield EventStatusDoneSuccess();
+      yield EventStatusDoneSuccess(_eventId);
     } catch (e) {
       yield NetworkError(e);
     }

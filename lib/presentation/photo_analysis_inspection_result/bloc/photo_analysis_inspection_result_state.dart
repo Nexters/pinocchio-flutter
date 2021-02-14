@@ -25,7 +25,14 @@ class DataConversionFromFailure extends PhotoAnalysisInspectionResultState {}
 
 class ErrorReportSuccess extends PhotoAnalysisInspectionResultState {}
 
-class EventStatusDoneSuccess extends PhotoAnalysisInspectionResultState {}
+class EventStatusDoneSuccess extends PhotoAnalysisInspectionResultState {
+  final String eventId;
+
+  EventStatusDoneSuccess(this.eventId);
+
+  @override
+  List<Object> get props => [eventId];
+}
 
 class NetworkError extends PhotoAnalysisInspectionResultState {
   final DioError dioError;
