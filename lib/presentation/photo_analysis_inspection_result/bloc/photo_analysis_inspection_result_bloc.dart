@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/capture_event_result_response.dart';
 import 'package:flutter_sancle/data/model/capture_event_update_request.dart';
@@ -60,6 +61,8 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
       _eventId = event.response.eventId;
       final resultResponse = CaptureEventResultResponse.fromJson(map);
       yield DataConversionFromSuccess(resultResponse);
+    } on DioError catch (e) {
+      yield NetworkError(e);
     } catch (e) {
       yield DataConversionFromFailure();
     }
@@ -73,8 +76,8 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
       final statusCode = await _repository.putCaptureEvent(
           _eventId, tokenResponse.userId, _eventUpdateRequest);
       yield ErrorReportSuccess();
-    } catch (e) {
-      log(e);
+    } on DioError catch (e) {
+      yield NetworkError(e);
     }
   }
 
@@ -87,7 +90,7 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
           _eventId, tokenResponse.userId, _eventUpdateRequest);
       yield EventStatusDoneSuccess();
     } catch (e) {
-      log(e);
+      yield NetworkError(e);
     }
   }
 

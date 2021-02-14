@@ -11,6 +11,7 @@ import 'package:flutter_sancle/data/model/enum/label_symbol/dry_cleaning_type.da
 import 'package:flutter_sancle/data/model/enum/label_symbol/dry_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/ironing_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/water_type.dart';
+import 'package:flutter_sancle/data/network/exception_handler.dart';
 import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_state.dart';
@@ -87,6 +88,8 @@ class _PhotoAnalysisInspectionResultScreenState
               _closeScreen();
             } else if (state is EventStatusDoneSuccess) {
               // TODO 최종 결과 화면 전환
+            } else if (state is NetworkError) {
+              ExceptionHandler.handleException(context, state.dioError);
             }
           },
         ),
