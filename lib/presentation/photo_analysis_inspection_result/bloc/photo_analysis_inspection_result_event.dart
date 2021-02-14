@@ -24,3 +24,5 @@ class ClothesColorTypeSelected extends PhotoAnalysisInspectionResultEvent {
   @override
   List<Object> get props => [selectedIndex];
 }
+
+class ErrorReportRequested extends PhotoAnalysisInspectionResultEvent {}

@@ -21,3 +21,5 @@ class DataConversionFromSuccess extends PhotoAnalysisInspectionResultState {
 }
 
 class DataConversionFromFailure extends PhotoAnalysisInspectionResultState {}
+
+class ErrorReportSuccess extends PhotoAnalysisInspectionResultState {}

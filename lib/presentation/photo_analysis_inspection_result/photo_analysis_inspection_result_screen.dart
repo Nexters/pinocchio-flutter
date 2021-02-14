@@ -11,6 +11,7 @@ import 'package:flutter_sancle/data/model/enum/label_symbol/dry_cleaning_type.da
 import 'package:flutter_sancle/data/model/enum/label_symbol/dry_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/ironing_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/water_type.dart';
+import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_bloc.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/bloc/photo_analysis_inspection_result_state.dart';
 import 'package:flutter_sancle/utils/constants.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_sancle/utils/ingredient_color_util.dart';
 import 'package:flutter_sancle/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:touchable_opacity/touchable_opacity.dart';
 import 'bloc/photo_analysis_inspection_result_event.dart';
 
 class PhotoAnalysisInspectionResultScreen extends StatefulWidget {
@@ -30,7 +32,7 @@ class PhotoAnalysisInspectionResultScreen extends StatefulWidget {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<PhotoAnalysisInspectionResultBloc>(
         create: (context) {
-          return PhotoAnalysisInspectionResultBloc()
+          return PhotoAnalysisInspectionResultBloc(CaptureEventRepository())
             ..add(PhotoAnalysisInspectionInitialized(response));
         },
         child: PhotoAnalysisInspectionResultScreen(
@@ -79,6 +81,9 @@ class _PhotoAnalysisInspectionResultScreenState
           listener: (context, state) {
             if (state is DataConversionFromFailure) {
               Fluttertoast.showToast(msg: DEFAULT_ERROR_MSG);
+              _closeScreen();
+            } else if (state is ErrorReportSuccess) {
+              Fluttertoast.showToast(msg: '레포트 보내기 성공');
               _closeScreen();
             }
           },
@@ -429,32 +434,36 @@ class _PhotoAnalysisInspectionResultScreenState
           height: 0.5,
           color: Color(0x660F1012),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 18, bottom: 28, left: 30, right: 30),
-          width: double.infinity,
-          height: 52,
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.5, color: Color(0x660F1012)),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '오류 레포트 보내기',
-                style: TextStyle(
-                  color: sancleDarkColor,
-                  fontSize: 16.0,
-                  fontFamily: 'nanum_square',
-                  fontWeight: FontWeight.w700,
+        TouchableOpacity(
+          onTap: () => _bloc.add(ErrorReportRequested()),
+          activeOpacity: 0.6,
+          child: Container(
+            margin: EdgeInsets.only(top: 18, bottom: 28, left: 30, right: 30),
+            width: double.infinity,
+            height: 52,
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.5, color: Color(0x660F1012)),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '오류 레포트 보내기',
+                  style: TextStyle(
+                    color: sancleDarkColor,
+                    fontSize: 16.0,
+                    fontFamily: 'nanum_square',
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 8),
-                child: SvgPicture.asset("assets/icons/ic_next_guide.svg"),
-              )
-            ],
+                Container(
+                  margin: EdgeInsets.only(left: 8),
+                  child: SvgPicture.asset("assets/icons/ic_next_guide.svg"),
+                )
+              ],
+            ),
           ),
         )
       ],
