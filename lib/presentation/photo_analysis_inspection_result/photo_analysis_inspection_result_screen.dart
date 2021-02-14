@@ -56,6 +56,12 @@ class _PhotoAnalysisInspectionResultScreenState
   }
 
   @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
@@ -363,15 +369,22 @@ class _PhotoAnalysisInspectionResultScreenState
           SizedBox(height: 30),
           Container(
             height: 46,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return _buildColorSelectionItem(
-                    index, index == _bloc.closeColorTypes.length - 1);
-              },
-              itemCount: _bloc.closeColorTypes.length,
-            ),
+            child: StreamBuilder<Object>(
+                stream: _bloc.selectedIndexStream,
+                initialData: 0,
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return _buildColorSelectionItem(
+                          index,
+                          index == _bloc.clothesColorTypes.length - 1,
+                          index == snapshot.data);
+                    },
+                    itemCount: _bloc.clothesColorTypes.length,
+                  );
+                }),
           ),
           SizedBox(height: 55),
         ],
@@ -379,17 +392,23 @@ class _PhotoAnalysisInspectionResultScreenState
     );
   }
 
-  Widget _buildColorSelectionItem(int index, bool isLastItem) {
-    ClothesColor color = _bloc.closeColorTypes[index].getColorWidget();
-    return Container(
-      margin: EdgeInsets.only(
-          left: index == 0 ? 30 : 22, right: isLastItem ? 22 : 0),
-      width: 46,
-      height: 46,
-      decoration: BoxDecoration(
+  Widget _buildColorSelectionItem(int index, bool isLastItem, bool isSelected) {
+    ClothesColor color = _bloc.clothesColorTypes[index].getColorWidget();
+    return GestureDetector(
+      onTap: () {
+        _bloc.add(ClothesColorTypeSelected(index));
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+            left: index == 0 ? 30 : 22, right: isLastItem ? 22 : 0),
+        width: 46,
+        height: 46,
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(width: 1, color: color.borderColor),
-          color: color.unSelectedColor),
+          color: isSelected ? color.selectedColor : color.unSelectedColor,
+        ),
+      ),
     );
   }
 

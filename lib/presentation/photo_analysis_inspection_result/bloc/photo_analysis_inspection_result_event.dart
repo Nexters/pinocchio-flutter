@@ -15,3 +15,12 @@ class PhotoAnalysisInspectionInitialized
   @override
   List<Object> get props => [response];
 }
+
+class ClothesColorTypeSelected extends PhotoAnalysisInspectionResultEvent {
+  final int selectedIndex;
+
+  ClothesColorTypeSelected(this.selectedIndex);
+
+  @override
+  List<Object> get props => [selectedIndex];
+}

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,13 +13,22 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
   PhotoAnalysisInspectionResultBloc()
       : super(PhotoAnalysisInspectionResultInitial());
 
-  List<ClothesColorType> closeColorTypes = ClothesColorType.values;
+  int _selectedIndex = 0;
+  final _selectedIndexStreamController = StreamController<int>();
+
+  StreamSink<int> get selectedIndexSink => _selectedIndexStreamController.sink;
+
+  Stream<int> get selectedIndexStream => _selectedIndexStreamController.stream;
+  List<ClothesColorType> clothesColorTypes = ClothesColorType.values;
 
   @override
   Stream<PhotoAnalysisInspectionResultState> mapEventToState(
       PhotoAnalysisInspectionResultEvent event) async* {
     if (event is PhotoAnalysisInspectionInitialized) {
       yield* _mapPhotoAnalysisInspectionInitializedToState(event);
+    } else if (event is ClothesColorTypeSelected) {
+      _selectedIndex = event.selectedIndex;
+      selectedIndexSink.add(_selectedIndex);
     }
   }
 
@@ -32,5 +42,9 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
     } catch (e) {
       yield DataConversionFromFailure();
     }
+  }
+
+  void dispose() {
+    _selectedIndexStreamController.close();
   }
 }
