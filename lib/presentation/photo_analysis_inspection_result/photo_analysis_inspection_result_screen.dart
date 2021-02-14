@@ -85,6 +85,8 @@ class _PhotoAnalysisInspectionResultScreenState
             } else if (state is ErrorReportSuccess) {
               Fluttertoast.showToast(msg: '레포트 보내기 성공');
               _closeScreen();
+            } else if (state is EventStatusDoneSuccess) {
+              // TODO 최종 결과 화면 전환
             }
           },
         ),
@@ -113,13 +115,18 @@ class _PhotoAnalysisInspectionResultScreenState
           ),
           Container(
             margin: EdgeInsets.only(right: getProportionateScreenWidth(30)),
-            child: Text(
-              '다음',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: sancleDarkColor,
-                fontWeight: FontWeight.w700,
-                fontFamily: 'nanum_square',
+            child: GestureDetector(
+              onTap: () {
+                _bloc.add(EventStatusDoneRequested());
+              },
+              child: Text(
+                '다음',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: sancleDarkColor,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'nanum_square',
+                ),
               ),
             ),
           ),

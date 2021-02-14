@@ -25,4 +25,6 @@ class ClothesColorTypeSelected extends PhotoAnalysisInspectionResultEvent {
   List<Object> get props => [selectedIndex];
 }
 
+class EventStatusDoneRequested extends PhotoAnalysisInspectionResultEvent {}
+
 class ErrorReportRequested extends PhotoAnalysisInspectionResultEvent {}

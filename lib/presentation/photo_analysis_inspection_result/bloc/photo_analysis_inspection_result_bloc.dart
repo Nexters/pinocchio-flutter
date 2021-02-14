@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/data/model/capture_event_result_response.dart';
 import 'package:flutter_sancle/data/model/capture_event_update_request.dart';
 import 'package:flutter_sancle/data/model/enum/clothes_color_type.dart';
-import 'package:flutter_sancle/data/model/token_response.dart';
 import 'package:flutter_sancle/data/prefs/user_token_manager.dart';
 import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/models/photo_analysis_status.dart';
@@ -44,6 +43,8 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
           clothesColorTypes[_selectedIndex].toShortString();
     } else if (event is ErrorReportRequested) {
       yield* _mapErrorReportRequestedToState();
+    } else if (event is EventStatusDoneRequested) {
+      yield* _mapEventStatusDoneRequestedToState();
     }
   }
 
@@ -72,6 +73,19 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
       final statusCode = await _repository.putCaptureEvent(
           _eventId, tokenResponse.userId, _eventUpdateRequest);
       yield ErrorReportSuccess();
+    } catch (e) {
+      log(e);
+    }
+  }
+
+  Stream<PhotoAnalysisInspectionResultState>
+      _mapEventStatusDoneRequestedToState() async* {
+    try {
+      final tokenResponse = await UserTokenManger.instance.getUserToken();
+      _eventUpdateRequest.status = PhotoAnalysisStatus.DONE.toShortString();
+      final statusCode = await _repository.putCaptureEvent(
+          _eventId, tokenResponse.userId, _eventUpdateRequest);
+      yield EventStatusDoneSuccess();
     } catch (e) {
       log(e);
     }
