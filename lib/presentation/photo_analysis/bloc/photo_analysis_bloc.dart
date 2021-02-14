@@ -27,7 +27,7 @@ class PhotoAnalysisBloc extends Bloc<PhotoAnalysisEvent, PhotoAnalysisState> {
       await Future.doWhile(() async {
         response = await _repository
             .getCaptureEvent(event.cameraResultResponse.eventId);
-        if (response.status == PhotoAnalysisStatus.DONE.toShortString()) {
+        if (response.status == PhotoAnalysisStatus.EXTRACT.toShortString()) {
           return false;
         } else {
           await Future.delayed(Duration(seconds: 3));
