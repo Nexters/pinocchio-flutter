@@ -65,7 +65,7 @@ extension ParseToString on WaterWashingType {
       case WaterWashingType.WASHER_90_KR:
         return 'assets/icons/ic_washer_95_kr.svg';
       default:
-        return "";
+        return 'assets/icons/ic_label_error.svg';
     }
   }
 }

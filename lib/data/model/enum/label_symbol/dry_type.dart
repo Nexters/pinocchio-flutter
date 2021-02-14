@@ -71,7 +71,7 @@ extension ParseToString on DryType {
       case DryType.DRY_MACHINE_FORBIDDEN_KR:
         return 'assets/icons/ic_dry_machine_forbidden_kr.svg';
       default:
-        return '';
+        return 'assets/icons/ic_label_error.svg';
     }
   }
 }

@@ -59,7 +59,7 @@ extension ParseToString on BleachType {
       case BleachType.CL_BLEACH_KR:
         return 'assets/icons/ic_cl_bleach_kr.svg';
       default:
-        return '';
+        return 'assets/icons/ic_label_error.svg';
     }
   }
 }

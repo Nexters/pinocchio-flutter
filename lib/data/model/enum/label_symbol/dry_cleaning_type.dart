@@ -47,7 +47,7 @@ extension ParseToString on DryCleaningType {
       case DryCleaningType.DRY_CLEANING_SELF_FORBIDDEN_KR:
         return 'assets/icons/ic_dry_cleaning_self_forbidden_kr.svg';
       default:
-        return '';
+        return 'assets/icons/ic_label_error.svg';
     }
   }
 }

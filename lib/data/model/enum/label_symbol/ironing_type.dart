@@ -65,7 +65,7 @@ extension ParseToString on IroningType {
       case IroningType.IRONING_180_210_FABRIC_KR:
         return 'assets/icons/ic_iron_180_210_fabric_kr.svg';
       default:
-        return '';
+        return 'assets/icons/ic_label_error.svg';
     }
   }
 }
