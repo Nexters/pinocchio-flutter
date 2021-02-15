@@ -100,6 +100,7 @@ class _PhotoAnalysisFinalResultScreenState
             child: GestureDetector(
               onTap: () {
                 Fluttertoast.showToast(msg: '저장 완료');
+                _closeScreen();
               },
               child: Text(
                 '저장',
