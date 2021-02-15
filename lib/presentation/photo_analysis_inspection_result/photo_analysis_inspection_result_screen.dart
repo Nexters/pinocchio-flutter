@@ -276,26 +276,29 @@ class _PhotoAnalysisInspectionResultScreenState
 
   Widget _buildIngredientsLayout(List<Ingredient> ingredientList) {
     List<Color> ingredientColors =
-        IngredientColorUtil.getIngredientColors(ingredientList.length);
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 42, horizontal: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '혼용률',
-            style: TextStyle(
-              fontSize: 18,
-              color: sancleDarkColor,
-              fontFamily: 'nanum_square',
-              fontWeight: FontWeight.w800,
+        IngredientColorUtil.getIngredientColors(ingredientList?.length ?? 0);
+    return Visibility(
+      visible: ingredientList != null && ingredientList.isNotEmpty,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 42, horizontal: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '혼용률',
+              style: TextStyle(
+                fontSize: 18,
+                color: sancleDarkColor,
+                fontFamily: 'nanum_square',
+                fontWeight: FontWeight.w800,
+              ),
             ),
-          ),
-          SizedBox(height: 30),
-          _buildIngredientChart(ingredientList, ingredientColors),
-          SizedBox(height: 28),
-          _buildIngredientItems(ingredientList, ingredientColors),
-        ],
+            SizedBox(height: 30),
+            _buildIngredientChart(ingredientList, ingredientColors),
+            SizedBox(height: 28),
+            _buildIngredientItems(ingredientList, ingredientColors),
+          ],
+        ),
       ),
     );
   }
