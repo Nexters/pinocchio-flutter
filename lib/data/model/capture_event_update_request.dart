@@ -1,3 +1,5 @@
+import 'ingredient.dart';
+
 /// imageId : "string"
 /// result : {"bleachType":"ALL_JP","clothesColor":"BEIGE","dryCleaning":"DRY_CLEANING_FORBIDDEN_JP","dryType":"DRY_BLOWER_FORBIDDEN_KR","ingredientList":[{"name":"string","percentage":0}],"ironingType":"FORBIDDEN_JP","waterType":"FORBIDDEN_BLOWER_JP"}
 /// status : "DONE"
@@ -14,7 +16,7 @@ class CaptureEventUpdateRequest {
   CaptureEventUpdateRequest({String imageId, Result result, String status}) {
     _imageId = imageId;
     _result = result;
-    status = status;
+    this.status = status;
   }
 
   CaptureEventUpdateRequest.fromJson(dynamic json) {
@@ -47,7 +49,7 @@ class Result {
   String clothesColor;
   String _dryCleaning;
   String _dryType;
-  List<IngredientList> _ingredientList;
+  List<Ingredient> _ingredientList;
   String _ironingType;
   String _waterType;
 
@@ -57,7 +59,7 @@ class Result {
 
   String get dryType => _dryType;
 
-  List<IngredientList> get ingredientList => _ingredientList;
+  List<Ingredient> get ingredientList => _ingredientList;
 
   String get ironingType => _ironingType;
 
@@ -68,7 +70,7 @@ class Result {
       String clothesColor,
       String dryCleaning,
       String dryType,
-      List<IngredientList> ingredientList,
+      List<Ingredient> ingredientList,
       String ironingType,
       String waterType}) {
     _bleachType = bleachType;
@@ -88,7 +90,7 @@ class Result {
     if (json["ingredientList"] != null) {
       _ingredientList = [];
       json["ingredientList"].forEach((v) {
-        _ingredientList.add(IngredientList.fromJson(v));
+        _ingredientList.add(Ingredient.fromJson(v));
       });
     }
     _ironingType = json["ironingType"];
@@ -106,35 +108,6 @@ class Result {
     }
     map["ironingType"] = _ironingType;
     map["waterType"] = _waterType;
-    return map;
-  }
-}
-
-/// name : "string"
-/// percentage : 0
-
-class IngredientList {
-  String _name;
-  int _percentage;
-
-  String get name => _name;
-
-  int get percentage => _percentage;
-
-  IngredientList({String name, int percentage}) {
-    _name = name;
-    _percentage = percentage;
-  }
-
-  IngredientList.fromJson(dynamic json) {
-    _name = json["name"];
-    _percentage = json["percentage"];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["name"] = _name;
-    map["percentage"] = _percentage;
     return map;
   }
 }

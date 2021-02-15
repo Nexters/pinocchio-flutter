@@ -1,3 +1,6 @@
+import 'package:flutter_sancle/data/model/capture_event_result_response.dart';
+import 'package:flutter_sancle/data/model/capture_event_update_request.dart';
+
 /// eventId : "2682fed3-4137-4e1b-bbe1-3299e5117cc0"
 /// imageId : "62c889bd-f62d-49e2-a7fc-7ac20da491cf"
 /// status : "DONE"
@@ -7,15 +10,21 @@ class CaptureEventResponse {
   String _eventId;
   String _imageId;
   String _status;
-  String _result;
+  CaptureEventResultResponse _result;
 
   String get eventId => _eventId;
+
   String get imageId => _imageId;
+
   String get status => _status;
-  String get result => _result;
+
+  CaptureEventResultResponse get result => _result;
 
   CaptureEventResponse(
-      {String eventId, String imageId, String status, String result}) {
+      {String eventId,
+      String imageId,
+      String status,
+      CaptureEventResultResponse result}) {
     _eventId = eventId;
     _imageId = imageId;
     _status = status;
@@ -26,7 +35,9 @@ class CaptureEventResponse {
     _eventId = json["eventId"];
     _imageId = json["imageId"];
     _status = json["status"];
-    _result = json["result"];
+    _result = json["result"] != null
+        ? CaptureEventResultResponse.fromJson(json["result"])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +45,22 @@ class CaptureEventResponse {
     map["eventId"] = _eventId;
     map["imageId"] = _imageId;
     map["status"] = _status;
-    map["result"] = _result;
+    if (_result != null) {
+      map["result"] = _result.toJson();
+    }
     return map;
+  }
+
+  CaptureEventUpdateRequest toCaptureEventUpdateRequest() {
+    return CaptureEventUpdateRequest(
+        imageId: _imageId,
+        status: _status,
+        result: Result(
+            bleachType: _result.bleachType,
+            dryCleaning: _result.dryCleaning,
+            dryType: _result.dryType,
+            ingredientList: _result.ingredientList,
+            ironingType: _result.ironingType,
+            waterType: _result.waterType));
   }
 }

@@ -11,6 +11,7 @@ import 'package:flutter_sancle/data/model/enum/label_symbol/dry_cleaning_type.da
 import 'package:flutter_sancle/data/model/enum/label_symbol/dry_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/ironing_type.dart';
 import 'package:flutter_sancle/data/model/enum/label_symbol/water_type.dart';
+import 'package:flutter_sancle/data/model/ingredient.dart';
 import 'package:flutter_sancle/data/network/exception_handler.dart';
 import 'package:flutter_sancle/data/repository/capture_event_repository.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_final_result/photo_analysis_final_result_screen.dart';
@@ -268,7 +269,7 @@ class _PhotoAnalysisInspectionResultScreenState
     );
   }
 
-  Widget _buildIngredientsLayout(List<IngredientList> ingredientList) {
+  Widget _buildIngredientsLayout(List<Ingredient> ingredientList) {
     List<Color> ingredientColors =
         IngredientColorUtil.getIngredientColors(ingredientList.length);
     return Container(
@@ -295,7 +296,7 @@ class _PhotoAnalysisInspectionResultScreenState
   }
 
   Widget _buildIngredientChart(
-      List<IngredientList> ingredientList, List<Color> ingredientColors) {
+      List<Ingredient> ingredientList, List<Color> ingredientColors) {
     return Container(
       width: double.infinity,
       height: 22,
@@ -324,7 +325,7 @@ class _PhotoAnalysisInspectionResultScreenState
   }
 
   Widget _buildIngredientItems(
-      List<IngredientList> ingredientList, List<Color> ingredientColors) {
+      List<Ingredient> ingredientList, List<Color> ingredientColors) {
     return ListView.builder(
       primary: false,
       shrinkWrap: true,

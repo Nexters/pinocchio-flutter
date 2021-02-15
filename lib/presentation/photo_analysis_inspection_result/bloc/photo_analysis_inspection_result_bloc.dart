@@ -53,14 +53,9 @@ class PhotoAnalysisInspectionResultBloc extends Bloc<
       _mapPhotoAnalysisInspectionInitializedToState(
           PhotoAnalysisInspectionInitialized event) async* {
     try {
-      Map<String, dynamic> map = jsonDecode(event.response.result);
-      _eventUpdateRequest = CaptureEventUpdateRequest(
-          imageId: event.response.imageId,
-          status: event.response.status,
-          result: Result.fromJson(map));
+      _eventUpdateRequest = event.response.toCaptureEventUpdateRequest();
       _eventId = event.response.eventId;
-      final resultResponse = CaptureEventResultResponse.fromJson(map);
-      yield DataConversionFromSuccess(resultResponse);
+      yield DataConversionFromSuccess(event.response.result);
     } on DioError catch (e) {
       yield NetworkError(e);
     } catch (e) {
