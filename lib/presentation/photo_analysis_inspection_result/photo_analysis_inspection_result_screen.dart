@@ -254,7 +254,11 @@ class _PhotoAnalysisInspectionResultScreenState
   Widget _buildLabelCategoryItem(String iconSvgName, String title) {
     return Column(
       children: [
-        SvgPicture.asset(iconSvgName),
+        SvgPicture.asset(
+          iconSvgName,
+          width: 34,
+          height: 34,
+        ),
         SizedBox(height: 12),
         Text(
           title,
