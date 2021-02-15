@@ -10,7 +10,6 @@ import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_e
 import 'package:flutter_sancle/presentation/photo_analysis/bloc/photo_analysis_state.dart';
 import 'package:flutter_sancle/presentation/photo_analysis_inspection_result/photo_analysis_inspection_result_screen.dart';
 import 'package:flutter_sancle/utils/constants.dart';
-import 'package:lottie/lottie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class PhotoAnalysisScreen extends StatefulWidget {
@@ -65,7 +64,12 @@ class _PhotoAnalysisScreenState extends State<PhotoAnalysisScreen> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          child: Lottie.asset('assets/images/lottie_example.json'),
+          child: Image.asset(
+            'assets/images/photo_analysis_loading.gif',
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
