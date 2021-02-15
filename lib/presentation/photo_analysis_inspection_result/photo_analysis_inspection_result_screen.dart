@@ -243,7 +243,7 @@ class _PhotoAnalysisInspectionResultScreenState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildLabelCategoryItem(waterType.getUIIconName(), '물세탁'),
-          _buildLabelCategoryItem(bleachType.getUIIconName(), '산소 표'),
+          _buildLabelCategoryItem(bleachType.getUIIconName(), '산소 표백'),
           _buildLabelCategoryItem(dryType.getUIIconName(), '건조'),
           _buildLabelCategoryItem(ironingType.getUIIconName(), '다림질'),
           _buildLabelCategoryItem(dryCleaning.getUIIconName(), '드라이'),
