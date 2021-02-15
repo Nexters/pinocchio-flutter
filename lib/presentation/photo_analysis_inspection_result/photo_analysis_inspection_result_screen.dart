@@ -124,7 +124,8 @@ class _PhotoAnalysisInspectionResultScreenState
             ),
           ),
           Container(
-            margin: EdgeInsets.only(right: getProportionateScreenWidth(30)),
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.only(right: getProportionateScreenWidth(22)),
             child: GestureDetector(
               onTap: () {
                 _bloc.add(EventStatusDoneRequested());
