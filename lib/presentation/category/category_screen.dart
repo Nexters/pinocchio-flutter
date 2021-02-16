@@ -21,7 +21,6 @@ class CategoryScreen extends StatefulWidget {
       return CategoryScreen(data: event, category: category);
     });
   }
-
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
@@ -33,7 +32,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: [
           Container(
             height: 56,
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(30)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(30)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -89,7 +89,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         color: shadowColor, offset: Offset(1, 2), blurRadius: 2)
                   ]),
               child: Padding(
-                padding: EdgeInsets.only(top: getProportionateScreenHeight(16), bottom: getProportionateScreenHeight(16), left: getProportionateScreenWidth(16)),
+                padding: EdgeInsets.only(
+                    top: getProportionateScreenHeight(16),
+                    bottom: getProportionateScreenHeight(16),
+                    left: getProportionateScreenWidth(16)),
                 child: Row(
                   children: [
                     // SvgPicture.asset('assets/icons/red.svg'),

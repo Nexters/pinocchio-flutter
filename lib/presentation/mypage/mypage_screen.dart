@@ -66,90 +66,91 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: buttonDisableColor,
+        backgroundColor: buttonDisableColor,
         body: BlocListener<MyPageBloc, MyPageState>(
-      listener: (context, state) {
-        if (state is MyPageStart) {}
-      },
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: buttonDisableColor,
-            child: Column(
-              children: <Widget>[
-                TouchableOpacity(
-                  activeOpacity: 0.6,
-                  child: Container(
-                      height: getProportionateScreenHeight(56),
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(
-                          left: getProportionateScreenWidth(30)),
-                      child: SvgPicture.asset("assets/icons/back_button.svg")),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+          listener: (context, state) {
+            if (state is MyPageStart) {}
+          },
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                color: buttonDisableColor,
+                child: Column(
+                  children: <Widget>[
+                    TouchableOpacity(
+                      activeOpacity: 0.6,
+                      child: Container(
+                          height: getProportionateScreenHeight(56),
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(
+                              left: getProportionateScreenWidth(30)),
+                          child:
+                              SvgPicture.asset("assets/icons/back_button.svg")),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    _notice(),
+                    _profile(),
+                    SizedBox(
+                      height: getProportionateScreenHeight(18),
+                    ),
+                    _cloth(),
+                    SizedBox(height: getProportionateScreenHeight(18)),
+                    TouchableOpacity(
+                      activeOpacity: 0.6,
+                      child: Container(
+                        height: getProportionateScreenHeight(62),
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(30)),
+                        alignment: Alignment.centerLeft,
+                        child: Text('공지사항',
+                            style: TextStyle(
+                                fontSize: getProportionateScreenHeight(18),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'nanum_square')),
+                      ),
+                      onTap: () {},
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(6)),
+                    TouchableOpacity(
+                      activeOpacity: 0.6,
+                      child: Container(
+                        height: getProportionateScreenHeight(62),
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(30)),
+                        alignment: Alignment.centerLeft,
+                        child: Text('자주 묻는 질문',
+                            style: TextStyle(
+                                fontSize: getProportionateScreenHeight(18),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'nanum_square')),
+                      ),
+                      onTap: () {},
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(6)),
+                    TouchableOpacity(
+                      activeOpacity: 0.6,
+                      child: Container(
+                        height: getProportionateScreenHeight(62),
+                        padding: EdgeInsets.only(
+                            left: getProportionateScreenWidth(30)),
+                        alignment: Alignment.centerLeft,
+                        child: Text('로그아웃',
+                            style: TextStyle(
+                                fontSize: getProportionateScreenHeight(18),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'nanum_square')),
+                      ),
+                      onTap: () {},
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(46)),
+                  ],
                 ),
-                _notice(),
-                _profile(),
-                SizedBox(
-                  height: getProportionateScreenHeight(18),
-                ),
-                _cloth(),
-                SizedBox(height: getProportionateScreenHeight(18)),
-                TouchableOpacity(
-                  activeOpacity: 0.6,
-                  child: Container(
-                    height: getProportionateScreenHeight(62),
-                    padding:
-                        EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                    alignment: Alignment.centerLeft,
-                    child: Text('공지사항',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(18),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'nanum_square')),
-                  ),
-                  onTap: () {},
-                ),
-                SizedBox(height: getProportionateScreenHeight(6)),
-                TouchableOpacity(
-                  activeOpacity: 0.6,
-                  child: Container(
-                    height: getProportionateScreenHeight(62),
-                    padding:
-                        EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                    alignment: Alignment.centerLeft,
-                    child: Text('자주 묻는 질문',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(18),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'nanum_square')),
-                  ),
-                  onTap: () {},
-                ),
-                SizedBox(height: getProportionateScreenHeight(6)),
-                TouchableOpacity(
-                  activeOpacity: 0.6,
-                  child: Container(
-                    height: getProportionateScreenHeight(62),
-                    padding:
-                        EdgeInsets.only(left: getProportionateScreenWidth(30)),
-                    alignment: Alignment.centerLeft,
-                    child: Text('로그아웃',
-                        style: TextStyle(
-                            fontSize: getProportionateScreenHeight(18),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'nanum_square')),
-                  ),
-                  onTap: () {},
-                ),
-                SizedBox(height: getProportionateScreenHeight(46)),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   Widget _circleBar(bool isActive) {
@@ -166,19 +167,17 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
-  Widget _notice(){
+  Widget _notice() {
     return Stack(
       children: [
         Container(
           alignment: Alignment.center,
           height: getProportionateScreenHeight(128),
           child: PageView.builder(
-              controller: BlocProvider.of<MyPageBloc>(context)
-                  .pageController,
+              controller: BlocProvider.of<MyPageBloc>(context).pageController,
               itemCount: _prompt.length,
               onPageChanged: (page) {
-                BlocProvider.of<MyPageBloc>(context)
-                    .add(MyPageSlide(page));
+                BlocProvider.of<MyPageBloc>(context).add(MyPageSlide(page));
               },
               itemBuilder: (context, index) {
                 return Row(
@@ -189,8 +188,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: Image.asset(
-                          'assets/images/mypage_illust.png',
+                      child: Image.asset('assets/images/mypage_illust.png',
                           height: getProportionateScreenHeight(94)),
                     ),
                     Expanded(child: Container()),
@@ -199,18 +197,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          SizedBox(
-                              height:
-                              getProportionateScreenHeight(36.0)),
+                          SizedBox(height: getProportionateScreenHeight(36.0)),
                           Text(
-                            widget.clothInfo.noticeViewList[index].title == null ? '' : widget.clothInfo.noticeViewList[index].title,
+                            widget.clothInfo.noticeViewList[index].title == null
+                                ? ''
+                                : widget.clothInfo.noticeViewList[index].title,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.end,
                             maxLines: 2,
                             style: TextStyle(
-                                fontSize:
-                                getProportionateScreenHeight(
-                                    22),
+                                fontSize: getProportionateScreenHeight(22),
                                 fontWeight: FontWeight.w800,
                                 fontFamily: 'nanum_square'),
                           ),
@@ -227,17 +223,17 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           //       fontWeight: FontWeight.w800,
                           //       fontFamily: 'nanum_square'),
                           // ),
-                          SizedBox(
-                              height:
-                              getProportionateScreenHeight(10.0)),
+                          SizedBox(height: getProportionateScreenHeight(10.0)),
                           Text(
-                            widget.clothInfo.noticeViewList[index].content == null ? '' : widget.clothInfo.noticeViewList[index].content,
+                            widget.clothInfo.noticeViewList[index].content ==
+                                    null
+                                ? ''
+                                : widget
+                                    .clothInfo.noticeViewList[index].content,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontSize:
-                                getProportionateScreenHeight(
-                                    12.0),
+                                fontSize: getProportionateScreenHeight(12.0),
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'nanum_square'),
                           ),
@@ -250,21 +246,20 @@ class _MyPageScreenState extends State<MyPageScreen> {
               }),
         ),
         StreamBuilder<int>(
-            stream:
-            BlocProvider.of<MyPageBloc>(context).currentPage,
+            stream: BlocProvider.of<MyPageBloc>(context).currentPage,
             initialData: 0,
             builder: (context, snapshot) {
               return Container(
                 padding: EdgeInsets.only(
                     right: getProportionateScreenWidth(30.0),
-                top: getProportionateScreenHeight(16)),
+                    top: getProportionateScreenHeight(16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    for (int i = 0; i < widget.clothInfo.noticeViewList.length; i++)
-                      if (i == snapshot.data) ...[
-                        _circleBar(true)
-                      ] else
+                    for (int i = 0;
+                        i < widget.clothInfo.noticeViewList.length;
+                        i++)
+                      if (i == snapshot.data) ...[_circleBar(true)] else
                         _circleBar(false),
                   ],
                 ),
@@ -274,7 +269,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
-  Widget _profile(){
+  Widget _profile() {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenHeight(30),
@@ -285,10 +280,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
-            BoxShadow(
-                color: shadowColor,
-                offset: Offset(1, 2),
-                blurRadius: 2)
+            BoxShadow(color: shadowColor, offset: Offset(1, 2), blurRadius: 2)
           ]),
       child: Row(
         children: <Widget>[
@@ -329,8 +321,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       '${widget.clothInfo.myLabelCount}',
                       key: clothNum,
                       style: TextStyle(
-                          fontSize:
-                          getProportionateScreenHeight(14),
+                          fontSize: getProportionateScreenHeight(14),
                           fontWeight: FontWeight.w700,
                           fontFamily: 'nanum_square'),
                     ),
@@ -388,9 +379,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       width: getProportionateScreenWidth(60));
                 });
               },
-              onTap: () {
-                Navigator.push(context, CategoryScreen.route());
-              },
+              onTap: () {},
               child: _currentCameraSvg[index],
             ),
           ),
@@ -407,21 +396,17 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
-  Widget _cloth(){
+  Widget _cloth() {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: getProportionateScreenHeight(30),
-          horizontal: getProportionateScreenWidth(30)
-      ),
+          horizontal: getProportionateScreenWidth(30)),
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
-            BoxShadow(
-                color: shadowColor,
-                offset: Offset(1, 2),
-                blurRadius: 2)
+            BoxShadow(color: shadowColor, offset: Offset(1, 2), blurRadius: 2)
           ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -449,7 +434,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(1, (index) {
-                  return _clothCategory(index+4);
+                  return _clothCategory(index + 4);
                 }),
               ),
             ],
