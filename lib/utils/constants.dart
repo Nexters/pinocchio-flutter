@@ -20,6 +20,7 @@ const highlightColor = Color(0xFFFFC43A);
 const textColor = Color(0xFF000000);
 const textDisableColor = Color(0xFFDBDBDB);
 const buttonDisableColor = Color(0xFFF1EFEE);
+const backgroundColor = Color(0xFFF1EFEE);
 
 const kakaoLoginColor = Color(0xFFFEE500);
 

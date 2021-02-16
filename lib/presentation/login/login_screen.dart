@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/repository/home_repository.dart';
 import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/home/home_screen.dart';
@@ -16,7 +17,7 @@ class LoginScreen extends StatefulWidget {
     return MaterialPageRoute(
       builder: (_) => BlocProvider<LoginBloc>(
         create: (context) {
-          return LoginBloc(LoginRepository())..add(KakaoTalkInstalled());
+          return LoginBloc(LoginRepository(), HomeRepository())..add(KakaoTalkInstalled());
         },
         child: LoginScreen(),
       ),
@@ -45,7 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is UserLoginSuccess) {
-            Navigator.pushReplacement(context, HomeScreen.route());
+            BlocProvider.of<LoginBloc>(context).notiInfo.listen((event) {
+              Navigator.pushReplacement(context, HomeScreen.route(event));
+            });
           } else if (state is UserLoginFailure) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text(DEFAULT_ERROR_MSG)));

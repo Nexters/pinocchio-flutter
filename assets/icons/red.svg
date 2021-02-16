@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 28 28">
+    <mask id="q5r9fsbnda" width="28" height="28" x="0" y="0" maskUnits="userSpaceOnUse">
+        <rect width="28" height="28" fill="#EA3223" rx="10"/>
+    </mask>
+    <g mask="url(#q5r9fsbnda)">
+        <rect width="28" height="28" fill="#F54343" rx="10"/>
+        <path fill="url(#paint0_linear)" d="M0 17.527C4.9 13.804 20.708 12.291 28 12v16H0V17.527z"/>
+        <path fill="url(#paint1_linear)" d="M0 28V8c5.6 8.678 20.32 9.661 28 10v10H0z"/>
+        <rect width="27" height="27" x=".5" y=".5" stroke="#E61E1E" rx="9.5"/>
+    </g>
+    <defs>
+        <linearGradient id="paint0_linear" x1="14" x2="14" y1="12" y2="28" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F54D4D"/>
+            <stop offset="1" stop-color="#FFF8F8" stop-opacity="0"/>
+            <stop offset="1" stop-color="#fff" stop-opacity=".3"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear" x1="14" x2="14" y1="8" y2="28" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F51B1B"/>
+            <stop offset="1" stop-color="#F54343" stop-opacity="0"/>
+        </linearGradient>
+    </defs>
+</svg>

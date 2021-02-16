@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sancle/data/model/home_response.dart';
+import 'package:flutter_sancle/data/repository/home_repository.dart';
 import 'package:flutter_sancle/data/repository/login_repository.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_event.dart';
 import 'package:flutter_sancle/presentation/login/bloc/login_state.dart';
@@ -8,7 +12,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   bool _isKakaoTalkInstalled = false;
   final LoginRepository _loginRepository;
 
-  LoginBloc(this._loginRepository) : super(LoginInitial());
+  final HomeRepository _homeRepository;
+  final StreamController _notiController = StreamController<HomeResponse>();
+  Stream<HomeResponse> _notiStream;
+  Stream<HomeResponse> get notiInfo => _notiStream;
+
+  LoginBloc(this._loginRepository, this._homeRepository) : super(LoginInitial()){
+    _notiStream = _notiController.stream;
+  }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -66,6 +77,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (code == 201 || code == 409) {
         bool isLoginSuccess = await _loginRepository.postAuthLogin(socialId);
         if (isLoginSuccess) {
+          HomeResponse _homeInfo = new HomeResponse();
+          _homeInfo = await _homeRepository.getHomeInfo();
+          _notiController.add(_homeInfo);
           yield UserLoginSuccess();
         } else {
           yield UserLoginFailure();
