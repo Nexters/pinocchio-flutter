@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sancle/presentation/app/bloc/auth_bloc.dart';
 import 'package:flutter_sancle/presentation/app/bloc/auth_event.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 class ExceptionHandler {
   static handleException(BuildContext context, DioError error,
       {bool showsErrorMsg = true, String errorMsg = '잠시 후 다시 시도해주세요.'}) {
@@ -12,7 +14,7 @@ class ExceptionHandler {
       BlocProvider.of<AuthBloc>(context).add(LogoutRequested(context));
     } else {
       if (showsErrorMsg) {
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text(errorMsg)));
+        Fluttertoast.showToast(msg: errorMsg);
       }
     }
   }

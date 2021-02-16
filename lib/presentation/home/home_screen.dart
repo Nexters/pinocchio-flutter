@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      backgroundColor: whiteColor,
       body: BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is MypageStart) {

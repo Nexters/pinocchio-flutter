@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_sancle/data/model/token_response.dart';
@@ -118,5 +119,28 @@ void main() {
     } on DioError catch (e) {
       print(e);
     }
+  });
+
+  test('원하는 값이 올때 까지 반복적으로 api 호출 테스트', () async {
+    print('테스트 시작');
+    int index = 0;
+    await Future.doWhile(() async {
+      index++;
+      await Future.delayed(Duration(seconds: 1)); // 네트워크 통신이 가정
+      if (index == 10) {
+        print('원하는 값이 도착했어요');
+        return false; // doWhile 탈출
+      } else {
+        print('대기중');
+        return true; // doWhile 반복
+      }
+    }).then((_) {
+      print('doWhile 정상적인 종료');
+    }).timeout(Duration(minutes: 2), onTimeout: () {
+      throw TimeoutException('Timeout'); // 2분안에 doWhile 문을 탈출 못할 경우 타임아웃 발생
+    }).catchError((e) {
+      print(e);
+    });
+    print('테스트 종료');
   });
 }
